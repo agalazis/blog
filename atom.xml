@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>A point in Time</title>
+  
+  <subtitle>To go faster, slow down. Everybody who knows about orbital mechanics understands that.- Scott Cherf</subtitle>
+  <link href="http://csmonk.com/blog/atom.xml" rel="self"/>
+  
+  <link href="http://csmonk.com/blog/"/>
+  <updated>2020-12-24T16:19:05.496Z</updated>
+  <id>http://csmonk.com/blog/</id>
+  
+  <author>
+    <name>Andreas Galazis</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tips on dockerizing python apps</title>
+    <link href="http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/"/>
+    <id>http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/</id>
+    <published>2020-12-23T19:55:30.000Z</published>
+    <updated>2020-12-24T16:19:05.496Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write</summary>
+        
+      
+    
+    
+    
+    
+    <category term="docker" scheme="http://csmonk.com/blog/tags/docker/"/>
+    
+    <category term="python" scheme="http://csmonk.com/blog/tags/python/"/>
+    
+    <category term="linux" scheme="http://csmonk.com/blog/tags/linux/"/>
+    
+  </entry>
+  
+</feed>
