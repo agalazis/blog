@@ -6,15 +6,15 @@
   
   <title>Tips on dockerizing python apps | A point in Time</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="While I have been dockerizing a variety of apps I realized tha python have they own special set if gotchas. Therefore I decided to write this post to list a few tips that will save time to first timer">
+  <meta name="description" content="While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tips on dockerizing python apps">
 <meta property="og:url" content="http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/index.html">
 <meta property="og:site_name" content="A point in Time">
-<meta property="og:description" content="While I have been dockerizing a variety of apps I realized tha python have they own special set if gotchas. Therefore I decided to write this post to list a few tips that will save time to first timer">
+<meta property="og:description" content="While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-23T19:55:30.000Z">
-<meta property="article:modified_time" content="2020-12-24T06:32:16.851Z">
+<meta property="article:modified_time" content="2020-12-24T16:12:35.514Z">
 <meta property="article:author" content="Andreas Galazis">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="python">
@@ -102,20 +102,21 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>While I have been dockerizing a variety of apps I realized tha python have they own special set if gotchas. Therefore I decided to write this post to list a few tips that will save time to first timers.</p>
-<h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>On the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages my no br preset int terminal output in a timely manner or several lines may be entirely missing up on application crash.If PYTHONBUFFERED is set to a non-empty string output will be unbuffered and the above issues will be solved</p>
+        <p>While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers.</p>
+<h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>One of the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages may not be preset in terminal output in a timely manner or several lines may be entirely missing on application crash. Depending on you use-case, you may set  PYTHONBUFFERED to a non-empty string so that output will be unbuffered. The above issues are solved afterwards.</p>
 <h2 id="Slow-builds-The-curse-of-alpine"><a href="#Slow-builds-The-curse-of-alpine" class="headerlink" title="Slow builds: The curse of alpine"></a>Slow builds: The curse of alpine</h2><p>If you try to build your app in alpine you ‘ll notice slow builds, by magnitude slower than installing apps on your local machine. This is because Standard PyPI wheels don’t work on Alpine. </p>
-<p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported Alpine.</p>
-<p>Although most Python packages include binary wheels that significantly speeding install time on all alpine you ‘ll need need to compile all the C code in every Python package that you use.</p>
+<p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported on Alpine.</p>
+<p>Although most Python packages include binary wheels that significantly decrease install time on all alpine set-ups you ‘ll need need to compile all the C code in every Python package that you use.</p>
 <p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps you image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
-<h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance using pipenv virtual environment seemed quite unstable. Not setting current directory in python path to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system, the <code>--system</code> flag needs to be used. Another thing to we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.<br>Considering the above the ideal command for most use cases I dealt with is:</p>
+<h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
+<p>Considering the above the ideal command for most use cases I dealt with is:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
 <p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="ckj2gy1fw00008fpvbiq0b3xx" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
+      <a data-url="http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="ckj31oyok0000uipvhr0801tb" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
       
       
       
