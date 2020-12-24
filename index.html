@@ -103,7 +103,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>While I have been dockerizing a variety of apps I realized tha python have they oun special set if gotchas. Therefore I decided to write this post to list a few tips that will save time to first timers.</p>
+        <p>While I have been dockerizing a variety of apps I realized tha python have they own special set if gotchas. Therefore I decided to write this post to list a few tips that will save time to first timers.</p>
 <h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>On the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages my no br preset int terminal output in a timely manner or several lines may be entirely missing up on application crash.If PYTHONBUFFERED is set to a non-empty string output will be unbuffered and the above issues will be solved</p>
 <h2 id="Slow-builds-The-curse-of-alpine"><a href="#Slow-builds-The-curse-of-alpine" class="headerlink" title="Slow builds: The curse of alpine"></a>Slow builds: The curse of alpine</h2><p>If you try to build your app in alpine you ‘ll notice slow builds, by magnitude slower than installing apps on your local machine. This is because Standard PyPI wheels don’t work on Alpine. </p>
 <p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported Alpine.</p>
@@ -116,7 +116,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="ckj2grdzf0000g5pv1j3faufe" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
+      <a data-url="http://csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="ckj2gy1fw00008fpvbiq0b3xx" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
       
       
       
