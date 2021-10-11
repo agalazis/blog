@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2021-10-11T21:17:58.870Z</updated>
+  <updated>2021-10-11T21:21:13.535Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/"/>
     <id>https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</id>
     <published>2021-09-24T18:50:17.000Z</published>
-    <updated>2021-10-11T21:17:58.870Z</updated>
+    <updated>2021-10-11T21:21:13.535Z</updated>
     
     
       
@@ -35,7 +35,15 @@
     
     
     
-    <category term="python, javascript, typescript, iterable, generator" scheme="https://www.csmonk.com/blog/tags/python-javascript-typescript-iterable-generator/"/>
+    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
+    
+    <category term="javascript" scheme="https://www.csmonk.com/blog/tags/javascript/"/>
+    
+    <category term="typescript" scheme="https://www.csmonk.com/blog/tags/typescript/"/>
+    
+    <category term="iterable" scheme="https://www.csmonk.com/blog/tags/iterable/"/>
+    
+    <category term="generator" scheme="https://www.csmonk.com/blog/tags/generator/"/>
     
   </entry>
   
@@ -58,9 +66,9 @@
     
     
     
-    <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
-    
     <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
+    
+    <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
     
     <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
