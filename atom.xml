@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2020-12-24T16:19:05.496Z</updated>
+  <updated>2021-10-11T21:17:58.870Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
+    <link href="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/"/>
+    <id>https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</id>
+    <published>2021-09-24T18:50:17.000Z</published>
+    <updated>2021-10-11T21:17:58.870Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;According to python &lt;a href=&quot;https://docs.python.org/3/library/functions.html#map&quot;&gt;map&lt;/a&gt; build in function  applies function to every</summary>
+        
+      
+    
+    
+    
+    
+    <category term="python, javascript, typescript, iterable, generator" scheme="https://www.csmonk.com/blog/tags/python-javascript-typescript-iterable-generator/"/>
+    
+  </entry>
   
   <entry>
     <title>Tips on dockerizing python apps</title>
