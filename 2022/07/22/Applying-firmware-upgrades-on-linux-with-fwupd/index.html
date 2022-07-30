@@ -6,15 +6,15 @@
   
   <title>Applying firmware upgrades on linux with fwupd | A point in Time</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).This can be performed via fwupdmgr fwud c">
+  <meta name="description" content="Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).This can be performed via fwupdmgr fwupd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Applying firmware upgrades on linux with fwupd">
 <meta property="og:url" content="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/index.html">
 <meta property="og:site_name" content="A point in Time">
-<meta property="og:description" content="Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).This can be performed via fwupdmgr fwud c">
+<meta property="og:description" content="Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).This can be performed via fwupdmgr fwupd">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-22T19:22:25.000Z">
-<meta property="article:modified_time" content="2022-07-30T14:48:56.109Z">
+<meta property="article:modified_time" content="2022-07-30T15:03:41.729Z">
 <meta property="article:author" content="Andreas Galazis">
 <meta property="article:tag" content="fwupd">
 <meta property="article:tag" content="firmware">
@@ -102,14 +102,14 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwud</code> command:</p>
+        <p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
 <p>Keeping the snippet here for future reference hope it helps somebody.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" data-id="cl680ehbs0000vtij6vp6a7cc" data-title="Applying firmware upgrades on linux with fwupd" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" data-id="cl680ygjv0000ghij3d5g1rds" data-title="Applying firmware upgrades on linux with fwupd" class="article-share-link">Share</a>
       
       
       

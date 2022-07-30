@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-07-30T14:48:56.109Z</updated>
+  <updated>2022-07-30T15:03:41.729Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/"/>
     <id>https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</id>
     <published>2022-07-22T19:22:25.000Z</published>
-    <updated>2022-07-30T14:48:56.109Z</updated>
+    <updated>2022-07-30T15:03:41.729Z</updated>
     
     
       
@@ -95,9 +95,9 @@
     
     <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
-    <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
-    
     <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
+    
+    <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
     
   </entry>
   
