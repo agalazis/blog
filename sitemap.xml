@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.csmonk.com/blog/2022/07/30/Applying-firmware-upgrades-on-linux-with-fwupd/</loc>
+    
+    <lastmod>2022-07-30</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</loc>
     
     <lastmod>2022-07-06</lastmod>
@@ -18,57 +25,71 @@
 
   <url>
     <loc>https://www.csmonk.com/blog</loc>
-    <lastmod>2022-07-06</lastmod>
+    <lastmod>2022-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://www.csmonk.com/blog/tags/python/</loc>
-    <lastmod>2022-07-06</lastmod>
+    <loc>https://www.csmonk.com/blog/tags/fwupd/</loc>
+    <lastmod>2022-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/tags/javascript/</loc>
-    <lastmod>2022-07-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/typescript/</loc>
-    <lastmod>2022-07-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/iterable/</loc>
-    <lastmod>2022-07-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/generator/</loc>
-    <lastmod>2022-07-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/docker/</loc>
-    <lastmod>2022-07-06</lastmod>
+    <loc>https://www.csmonk.com/blog/tags/firmware/</loc>
+    <lastmod>2022-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/linux/</loc>
-    <lastmod>2022-07-06</lastmod>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/python/</loc>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/javascript/</loc>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/typescript/</loc>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/iterable/</loc>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/generator/</loc>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/docker/</loc>
+    <lastmod>2022-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
