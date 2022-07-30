@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.csmonk.com/blog/2022/07/30/Applying-firmware-upgrades-on-linux-with-fwupd/</loc>
+    <loc>https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</loc>
     
     <lastmod>2022-07-30</lastmod>
     
@@ -53,6 +53,13 @@
   </url>
   
   <url>
+    <loc>https://www.csmonk.com/blog/tags/docker/</loc>
+    <lastmod>2022-07-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.csmonk.com/blog/tags/python/</loc>
     <lastmod>2022-07-30</lastmod>
     <changefreq>daily</changefreq>
@@ -82,13 +89,6 @@
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/generator/</loc>
-    <lastmod>2022-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/docker/</loc>
     <lastmod>2022-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
