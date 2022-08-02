@@ -117,9 +117,8 @@
 <li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo waydroid init -c https:&#x2F;&#x2F;ota.waydro.id&#x2F;system -v https:&#x2F;&#x2F;ota.waydro.id&#x2F;vendor -s GAPPS</span><br></pre></td></tr></table></figure>
 <h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3></li>
-<li><p>Register the output of:</p>
+<li><p>Register the output of the following  command at<br><a target="_blank" rel="noopener" href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;select * from main where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
-<p>at<br><a target="_blank" rel="noopener" href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a></p>
 </li>
 <li><p>To mitigate changing registration number add a cron job:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
@@ -133,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/" data-id="cl6btsh3f0003sjij1xhcc54n" data-title="Waydroid-setup-on-fedora" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/" data-id="cl6btts9s000306ij5blfd1nr" data-title="Waydroid-setup-on-fedora" class="article-share-link">Share</a>
       
       
       
@@ -174,7 +173,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" data-id="cl6btsh3a0000sjij0q1cgmp4" data-title="Applying firmware upgrades on linux with fwupd" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" data-id="cl6btts9n000006ij6jgsb2e3" data-title="Applying firmware upgrades on linux with fwupd" class="article-share-link">Share</a>
       
       
       
@@ -237,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/" data-id="cl6btsh3d0001sjijdk2qbcil" data-title="Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/" data-id="cl6btts9q000106ij9ohgh38e" data-title="Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it" class="article-share-link">Share</a>
       
       
       
@@ -287,7 +286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="cl6btsh3g0004sjij3vtf2ql8" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="cl6btts9t000406ija4qyfq0f" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
       
       
       
