@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-07-30T15:03:41.729Z</updated>
+  <updated>2022-08-02T06:54:33.309Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Waydroid-setup-on-fedora</title>
+    <link href="https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/"/>
+    <id>https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/</id>
+    <published>2022-08-02T06:06:23.000Z</published>
+    <updated>2022-08-02T06:54:33.309Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Want to use an android app on your computer? &lt;a href=&quot;https://waydro.id/&quot;&gt;Waydroid&lt;/a&gt;  has you covered I have also had a look in &lt;a</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Applying firmware upgrades on linux with fwupd</title>

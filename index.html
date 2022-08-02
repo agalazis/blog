@@ -81,6 +81,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Waydroid-setup-on-fedora" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2022/08/02/Waydroid-setup-on-fedora/" class="article-date">
+  <time class="dt-published" datetime="2022-08-02T06:06:23.000Z" itemprop="datePublished">2022-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2022/08/02/Waydroid-setup-on-fedora/">Waydroid-setup-on-fedora</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Want to use an android app on your computer? <a target="_blank" rel="noopener" href="https://waydro.id/">Waydroid</a>  has you covered I have also had a look in <a target="_blank" rel="noopener" href="https://anbox.io/">anbox</a> in the past but it seemed to be a lot of trouble to setup and sort of unstable to use(at leas on machine). Installing wydroid is straight forward while using it seems flowless to me. I have managed to get it working on my <a target="_blank" rel="noopener" href="https://www.notebookcheck.net/Lenovo-ThinkPad-X260-Core-i7-FHD-Subnotebook-Review.166601.0.html">thinkpad x260</a> I would like to get it working on my thinkpad t14 gen3 as well but that’s nothing to blame <a target="_blank" rel="noopener" href="https://waydro.id/">waydroid</a> for since my t14 has general display issues.</p>
+<h3 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h3><p>Here are the steps I followed to set it up :</p>
+<ol>
+<li><p>Make sure you’re using kernel version 5.15 or higher</p>
+</li>
+<li><p>Add the Copr repository:<br> <code>sudo dnf copr enable aleasto/waydroid</code></p>
+</li>
+<li><p>Update sepolicy  if using fedora35 (I didn’t need to run this step)<br> <code>sudo dnf update</code></p>
+</li>
+<li><p>Install waydroid<br> <code>sudo dnf install waydroid</code></p>
+</li>
+<li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo waydroid init -c https:&#x2F;&#x2F;ota.waydro.id&#x2F;system -v https:&#x2F;&#x2F;ota.waydro.id&#x2F;vendor -s GAPPS</span><br></pre></td></tr></table></figure>
+<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3></li>
+<li><p>Register the output of:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;select * from main where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
+<p>at<br><a target="_blank" rel="noopener" href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a></p>
+</li>
+<li><p>To mitigate changing registration number add a cron job:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+<p>add the following line:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 * * * *       echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;update main set value&#x3D;\&quot;&lt;DEVICE_ID&gt;\&quot; where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| &#x2F;usr&#x2F;bin&#x2F;waydroid shell</span><br></pre></td></tr></table></figure>
+<p>replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</p>
+</li>
+</ol>
+<h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><p>You may now start waydroid using the desktop menu entry. It will take some time for your device to register so if you receive any google service errors reporting your device as unregistered try again later.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/" data-id="cl6btsh3f0003sjij1xhcc54n" data-title="Waydroid-setup-on-fedora" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Applying-firmware-upgrades-on-linux-with-fwupd" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" class="article-date">
@@ -110,7 +174,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" data-id="cl680ygjv0000ghij3d5g1rds" data-title="Applying firmware upgrades on linux with fwupd" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" data-id="cl6btsh3a0000sjij0q1cgmp4" data-title="Applying firmware upgrades on linux with fwupd" class="article-share-link">Share</a>
       
       
       
@@ -173,7 +237,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/" data-id="cl680ygjy0001ghijbn9g1t3q" data-title="Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/" data-id="cl6btsh3d0001sjijdk2qbcil" data-title="Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it" class="article-share-link">Share</a>
       
       
       
@@ -223,7 +287,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="cl680ygk00003ghijhn1n3jhj" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
+      <a data-url="https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/" data-id="cl6btsh3g0004sjij3vtf2ql8" data-title="Tips on dockerizing python apps" class="article-share-link">Share</a>
       
       
       
@@ -269,7 +333,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/12/">December 2020</a></li></ul>
     </div>
   </div>
 
@@ -280,6 +344,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2022/08/02/Waydroid-setup-on-fedora/">Waydroid-setup-on-fedora</a>
+          </li>
         
           <li>
             <a href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/">Applying firmware upgrades on linux with fwupd</a>
