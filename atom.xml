@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-08-02T06:57:16.347Z</updated>
+  <updated>2022-08-02T06:57:42.765Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/"/>
     <id>https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/</id>
     <published>2022-08-02T06:06:23.000Z</published>
-    <updated>2022-08-02T06:57:16.347Z</updated>
+    <updated>2022-08-02T06:57:42.765Z</updated>
     
     
       
@@ -34,6 +34,8 @@
     
     
     
+    
+    <category term="waydroid, fedora, linux, android" scheme="https://www.csmonk.com/blog/tags/waydroid-fedora-linux-android/"/>
     
   </entry>
   

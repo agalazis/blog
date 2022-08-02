@@ -95,6 +95,13 @@
   </url>
   
   <url>
+    <loc>https://www.csmonk.com/blog/tags/waydroid-fedora-linux-android/</loc>
+    <lastmod>2022-08-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.csmonk.com/blog/tags/docker/</loc>
     <lastmod>2022-08-02</lastmod>
     <changefreq>daily</changefreq>
