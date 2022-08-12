@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="Software,Development,Engineering,Blog" />
+       
+      <meta name="description" content="Software Development &amp; Engineering Blog" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> A point in Time</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/blog/dist/main.css">
+
+      
+<link rel="stylesheet" href="/blog/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/blog/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/blog/atom.xml" title="A point in Time" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/blog/">A point in Time</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['To go fast...', '...slow down', 'Everybody who knows about orbital mechanics understands that'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-Waydroid-setup-on-fedora"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2022/08/02/Waydroid-setup-on-fedora/"
+    >Waydroid setup on fedora (with google services)</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2022/08/02/Waydroid-setup-on-fedora/" class="article-date">
+  <time datetime="2022-08-02T06:06:23.000Z" itemprop="datePublished">2022-08-02</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Want to use an android app on your computer? <a target="_blank" rel="noopener" href="https://waydro.id/">Waydroid</a>  has you covered I have also had a look in <a target="_blank" rel="noopener" href="https://anbox.io/">anbox</a> in the past but it seemed to be a lot of trouble to setup and sort of unstable to use(at leas on machine). Installing wydroid is straight forward while using it seems flowless to me. I have managed to get it working on my <a target="_blank" rel="noopener" href="https://www.notebookcheck.net/Lenovo-ThinkPad-X260-Core-i7-FHD-Subnotebook-Review.166601.0.html">thinkpad x260</a> I would like to get it working on my thinkpad t14 gen3 as well but that’s nothing to blame <a target="_blank" rel="noopener" href="https://waydro.id/">waydroid</a> for since my t14 has general display issues.</p>
+<h3 id="Installation-Steps"><a href="#Installation-Steps" class="headerlink" title="Installation Steps"></a>Installation Steps</h3><p>Here are the steps I followed to set it up :</p>
+<ol>
+<li><p>Make sure you’re using kernel version 5.15 or higher</p>
+</li>
+<li><p>Add the Copr repository:<br> <code>sudo dnf copr enable aleasto/waydroid</code></p>
+</li>
+<li><p>Update sepolicy  if using fedora35 (I didn’t need to run this step)<br> <code>sudo dnf update</code></p>
+</li>
+<li><p>Install waydroid<br> <code>sudo dnf install waydroid</code></p>
+</li>
+<li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo waydroid init -c https:&#x2F;&#x2F;ota.waydro.id&#x2F;system -v https:&#x2F;&#x2F;ota.waydro.id&#x2F;vendor -s GAPPS</span><br></pre></td></tr></table></figure>
+<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3></li>
+<li><p>Register the output of the following  command at<br><a target="_blank" rel="noopener" href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;select * from main where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>To mitigate changing registration number add a cron job:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+<p>add the following line:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 * * * *       echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;update main set value&#x3D;\&quot;&lt;DEVICE_ID&gt;\&quot; where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| &#x2F;usr&#x2F;bin&#x2F;waydroid shell</span><br></pre></td></tr></table></figure>
+<p>replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</p>
+</li>
+</ol>
+<h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><p>You may now start waydroid using the desktop menu entry. It will take some time for your device to register so if you receive any google service errors reporting your device as unregistered try again later.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/waydroid-fedora-linux-android/" rel="tag">waydroid, fedora, linux, android</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Applying-firmware-upgrades-on-linux-with-fwupd"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/"
+    >Applying firmware upgrades on linux with fwupd</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" class="article-date">
+  <time datetime="2022-07-22T19:22:25.000Z" itemprop="datePublished">2022-07-22</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
+<p>Keeping the snippet here for future reference hope it helps somebody.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/firmware/" rel="tag">firmware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fwupd/" rel="tag">fwupd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/"
+    >Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/" class="article-date">
+  <time datetime="2021-09-24T18:50:17.000Z" itemprop="datePublished">2021-09-24</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>According to python docs <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
+<h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#39;processing &#123;val&#125;&#39; )</span><br><span class="line">    return (val % 2) &#x3D;&#x3D; 0</span><br><span class="line"></span><br><span class="line">huge_range &#x3D; range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#39;Some even found&#39;)</span><br><span class="line">else:</span><br><span class="line">  print(&#39;No even found&#39;)</span><br></pre></td></tr></table></figure>
+<p>The above will have the following result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
+<p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
+<h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
+<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) &#x3D;&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number&#x3D; 1) &#123;</span><br><span class="line">  let x &#x3D; start - step;</span><br><span class="line">  while(x &lt; end - step) yield x +&#x3D; step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(&#96;processing $&#123;a&#125;&#96;)</span><br><span class="line">  return a%2 &#x3D;&#x3D;&#x3D; 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange &#x3D; range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#39;Some even found&#39;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#39;No even found&#39;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The above will have the following result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
+<h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import &#123; range &#125; from &#39;rxjs&#x2F;observable&#x2F;range&#39;;</span><br><span class="line">import &#123; every, map &#125; from &#39;rxjs&#x2F;operators&#39;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(&#96;processing $&#123;a&#125;&#96;);</span><br><span class="line">  return a % 2 &#x3D;&#x3D;&#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) &#x3D;&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) &#x3D;&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#39;Some even found&#39;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#39;All Odd&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>The above will have the following result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/generator/" rel="tag">generator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iterable/" rel="tag">iterable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/typescript/" rel="tag">typescript</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-tips-on-dockerising-python-apps"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2020/12/23/tips-on-dockerising-python-apps/"
+    >Tips on dockerizing python apps</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2020/12/23/tips-on-dockerising-python-apps/" class="article-date">
+  <time datetime="2020-12-23T19:55:30.000Z" itemprop="datePublished">2020-12-23</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers.</p>
+<h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>One of the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages may not be preset in terminal output in a timely manner or several lines may be entirely missing on application crash. Depending on you use-case, you may set  PYTHONBUFFERED to a non-empty string so that output will be unbuffered. The above issues are solved afterwards.</p>
+<h2 id="Slow-builds-The-curse-of-alpine"><a href="#Slow-builds-The-curse-of-alpine" class="headerlink" title="Slow builds: The curse of alpine"></a>Slow builds: The curse of alpine</h2><p>If you try to build your app in alpine you ‘ll notice slow builds, by magnitude slower than installing apps on your local machine. This is because Standard PyPI wheels don’t work on Alpine. </p>
+<p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported on Alpine.</p>
+<p>Although most Python packages include binary wheels that significantly decrease install time on all alpine set-ups you ‘ll need need to compile all the C code in every Python package that you use.</p>
+<p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps your image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
+<h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
+<p>Considering the above the ideal command for most use cases I dealt with is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
+<p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+  </article>
+  
+
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2012-2022
+        <i class="ri-heart-fill heart_icon"></i> Andreas Galazis
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/blog/"><img src="/images/ayer-side.svg" alt="A point in Time"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/">home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/archives">archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/categories">categories</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/tags">tags</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="https://csmonk.com">about</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/blog/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/blog/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/blog/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/blog/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/blog/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/blog/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
