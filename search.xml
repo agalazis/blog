@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Applying firmware upgrades on linux with fwupd</title>
+    <url>/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</url>
+    <content><![CDATA[<p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
+
+<p>Keeping the snippet here for future reference hope it helps somebody.</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>fwupd</tag>
+        <tag>firmware</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
     <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
     <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
@@ -48,6 +65,30 @@
       </tags>
   </entry>
   <entry>
+    <title>Tips on dockerizing python apps</title>
+    <url>/blog/2020/12/23/tips-on-dockerising-python-apps/</url>
+    <content><![CDATA[<p>While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers.</p>
+<h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>One of the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages may not be preset in terminal output in a timely manner or several lines may be entirely missing on application crash. Depending on you use-case, you may set  PYTHONBUFFERED to a non-empty string so that output will be unbuffered. The above issues are solved afterwards.</p>
+<h2 id="Slow-builds-The-curse-of-alpine"><a href="#Slow-builds-The-curse-of-alpine" class="headerlink" title="Slow builds: The curse of alpine"></a>Slow builds: The curse of alpine</h2><p>If you try to build your app in alpine you ‘ll notice slow builds, by magnitude slower than installing apps on your local machine. This is because Standard PyPI wheels don’t work on Alpine. </p>
+<p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported on Alpine.</p>
+<p>Although most Python packages include binary wheels that significantly decrease install time on all alpine set-ups you ‘ll need need to compile all the C code in every Python package that you use.</p>
+<p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps your image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
+<h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
+<p>Considering the above the ideal command for most use cases I dealt with is:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
+
+<p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
+]]></content>
+      <categories>
+        <category>DevOps</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>python</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Waydroid setup on fedora (with google services)</title>
     <url>/blog/2022/08/02/Waydroid-setup-on-fedora/</url>
     <content><![CDATA[<p>Want to use an android app on your computer? <a href="https://waydro.id/">Waydroid</a>  has you covered I have also had a look in <a href="https://anbox.io/">anbox</a> in the past but it seemed to be a lot of trouble to setup and sort of unstable to use(at leas on machine). Installing wydroid is straight forward while using it seems flowless to me. I have managed to get it working on my <a href="https://www.notebookcheck.net/Lenovo-ThinkPad-X260-Core-i7-FHD-Subnotebook-Review.166601.0.html">thinkpad x260</a> I would like to get it working on my thinkpad t14 gen3 as well but that’s nothing to blame <a href="https://waydro.id/">waydroid</a> for since my t14 has general display issues.</p>
@@ -83,51 +124,10 @@ replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in
         <category>linux</category>
       </categories>
       <tags>
+        <tag>linux</tag>
         <tag>waydroid</tag>
         <tag>fedora</tag>
-        <tag>linux</tag>
         <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Applying firmware upgrades on linux with fwupd</title>
-    <url>/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</url>
-    <content><![CDATA[<p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
-
-<p>Keeping the snippet here for future reference hope it helps somebody.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>fwupd</tag>
-        <tag>firmware</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Tips on dockerizing python apps</title>
-    <url>/blog/2020/12/23/tips-on-dockerising-python-apps/</url>
-    <content><![CDATA[<p>While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers.</p>
-<h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>One of the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages may not be preset in terminal output in a timely manner or several lines may be entirely missing on application crash. Depending on you use-case, you may set  PYTHONBUFFERED to a non-empty string so that output will be unbuffered. The above issues are solved afterwards.</p>
-<h2 id="Slow-builds-The-curse-of-alpine"><a href="#Slow-builds-The-curse-of-alpine" class="headerlink" title="Slow builds: The curse of alpine"></a>Slow builds: The curse of alpine</h2><p>If you try to build your app in alpine you ‘ll notice slow builds, by magnitude slower than installing apps on your local machine. This is because Standard PyPI wheels don’t work on Alpine. </p>
-<p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported on Alpine.</p>
-<p>Although most Python packages include binary wheels that significantly decrease install time on all alpine set-ups you ‘ll need need to compile all the C code in every Python package that you use.</p>
-<p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps your image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
-<h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
-<p>Considering the above the ideal command for most use cases I dealt with is:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
-
-<p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
-]]></content>
-      <categories>
-        <category>DevOps</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>linux</tag>
-        <tag>docker</tag>
       </tags>
   </entry>
 </search>

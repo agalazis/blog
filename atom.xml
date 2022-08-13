@@ -37,11 +37,11 @@
     <category term="linux" scheme="https://www.csmonk.com/blog/categories/linux/"/>
     
     
+    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
+    
     <category term="waydroid" scheme="https://www.csmonk.com/blog/tags/waydroid/"/>
     
     <category term="fedora" scheme="https://www.csmonk.com/blog/tags/fedora/"/>
-    
-    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
     <category term="android" scheme="https://www.csmonk.com/blog/tags/android/"/>
     
@@ -68,11 +68,11 @@
     <category term="linux" scheme="https://www.csmonk.com/blog/categories/linux/"/>
     
     
-    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
-    
     <category term="fwupd" scheme="https://www.csmonk.com/blog/tags/fwupd/"/>
     
     <category term="firmware" scheme="https://www.csmonk.com/blog/tags/firmware/"/>
+    
+    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
   </entry>
   
@@ -130,9 +130,9 @@
     <category term="DevOps" scheme="https://www.csmonk.com/blog/categories/DevOps/"/>
     
     
-    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
-    
     <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
+    
+    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
     
     <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
     
