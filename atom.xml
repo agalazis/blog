@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-08-02T07:08:07.069Z</updated>
+  <updated>2022-08-13T14:09:08.861Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/"/>
     <id>https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/</id>
     <published>2022-08-02T06:06:23.000Z</published>
-    <updated>2022-08-02T07:08:07.069Z</updated>
+    <updated>2022-08-13T14:09:08.861Z</updated>
     
     
       
@@ -34,8 +34,16 @@
     
     
     
+    <category term="linux" scheme="https://www.csmonk.com/blog/categories/linux/"/>
     
-    <category term="waydroid, fedora, linux, android" scheme="https://www.csmonk.com/blog/tags/waydroid-fedora-linux-android/"/>
+    
+    <category term="waydroid" scheme="https://www.csmonk.com/blog/tags/waydroid/"/>
+    
+    <category term="fedora" scheme="https://www.csmonk.com/blog/tags/fedora/"/>
+    
+    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
+    
+    <category term="android" scheme="https://www.csmonk.com/blog/tags/android/"/>
     
   </entry>
   
@@ -44,7 +52,7 @@
     <link href="https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/"/>
     <id>https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</id>
     <published>2022-07-22T19:22:25.000Z</published>
-    <updated>2022-07-30T15:03:41.729Z</updated>
+    <updated>2022-08-13T14:11:43.347Z</updated>
     
     
       
@@ -57,12 +65,14 @@
     
     
     
+    <category term="linux" scheme="https://www.csmonk.com/blog/categories/linux/"/>
+    
+    
+    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
     <category term="fwupd" scheme="https://www.csmonk.com/blog/tags/fwupd/"/>
     
     <category term="firmware" scheme="https://www.csmonk.com/blog/tags/firmware/"/>
-    
-    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
   </entry>
   
@@ -71,7 +81,7 @@
     <link href="https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/"/>
     <id>https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</id>
     <published>2021-09-24T18:50:17.000Z</published>
-    <updated>2022-07-06T05:21:01.470Z</updated>
+    <updated>2022-08-13T14:10:57.681Z</updated>
     
     
       
@@ -83,6 +93,8 @@
       
     
     
+    
+    <category term="Software Engineering" scheme="https://www.csmonk.com/blog/categories/Software-Engineering/"/>
     
     
     <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
@@ -102,7 +114,7 @@
     <link href="https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/"/>
     <id>https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/</id>
     <published>2020-12-23T19:55:30.000Z</published>
-    <updated>2020-12-24T16:19:05.490Z</updated>
+    <updated>2022-08-13T14:10:16.992Z</updated>
     
     
       
@@ -114,6 +126,8 @@
       
     
     
+    
+    <category term="DevOps" scheme="https://www.csmonk.com/blog/categories/DevOps/"/>
     
     
     <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>

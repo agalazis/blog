@@ -45,7 +45,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/blog/atom.xml" title="A point in Time" type="application/atom+xml">
+    <!-- hexo injector head_end start -->
+    <style>aside.sidebar{width: 10rem;}aside.sidebar{left: -10rem;}aside.sidebar .navbar-toggle{left: 11.5rem;}</style><!-- hexo injector head_end end --><link rel="alternate" href="/blog/atom.xml" title="A point in Time" type="application/atom+xml">
 </head>
   </html>
 </html>
@@ -82,7 +83,11 @@
     <div class="article-meta">
       <a href="/blog/2020/12/23/tips-on-dockerising-python-apps/" class="article-date">
   <time datetime="2020-12-23T19:55:30.000Z" itemprop="datePublished">2020-12-23</time>
-</a>   
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/DevOps/">DevOps</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
@@ -120,7 +125,8 @@
 <p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps your image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
 <h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
 <p>Considering the above the ideal command for most use cases I dealt with is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
+
 <p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
  
       <!-- reward -->
@@ -272,7 +278,7 @@
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" target="_blank" rel="noopener" href="https://csmonk.com">About</a>
+      <a class="nav-item-link" href="https://www.csmonk.com">About</a>
     </li>
     
   </ul>
@@ -286,7 +292,7 @@
       </a>
       
       
-      <a class="nav-item-link" target="_blank" href="/blog/blog/atom.xml" title="RSS Feed">
+      <a class="nav-item-link" target="_blank" href="/blog/atom.xml" title="RSS Feed">
         <i class="ri-rss-line"></i>
       </a>
       

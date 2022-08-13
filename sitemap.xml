@@ -2,38 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.csmonk.com/blog/404.html</loc>
+    <loc>https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</loc>
     
     <lastmod>2022-08-13</lastmod>
     
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/</loc>
-    
-    <lastmod>2022-08-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</loc>
-    
-    <lastmod>2022-07-30</lastmod>
-    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</loc>
     
-    <lastmod>2022-07-06</lastmod>
+    <lastmod>2022-08-13</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/2020/12/23/tips-on-dockerising-python-apps/</loc>
     
-    <lastmod>2020-12-24</lastmod>
+    <lastmod>2022-08-13</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/2022/08/02/Waydroid-setup-on-fedora/</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/index.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/categories/index.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/404.html</loc>
+    
+    <lastmod>2022-08-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
 
@@ -48,73 +76,108 @@
   <url>
     <loc>https://www.csmonk.com/blog/tags/python/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/javascript/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/typescript/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/iterable/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/generator/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/tags/fwupd/</loc>
+    <loc>https://www.csmonk.com/blog/tags/waydroid/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/tags/firmware/</loc>
+    <loc>https://www.csmonk.com/blog/tags/fedora/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/linux/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/tags/waydroid-fedora-linux-android/</loc>
+    <loc>https://www.csmonk.com/blog/tags/android/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/fwupd/</loc>
+    <lastmod>2022-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/firmware/</loc>
+    <lastmod>2022-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.csmonk.com/blog/tags/docker/</loc>
     <lastmod>2022-08-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
 
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/categories/Software-Engineering/</loc>
+    <lastmod>2022-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/categories/linux/</loc>
+    <lastmod>2022-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/categories/DevOps/</loc>
+    <lastmod>2022-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>

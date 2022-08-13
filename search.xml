@@ -5,47 +5,46 @@
     <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
     <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
 <h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#39;processing &#123;val&#125;&#39; )</span><br><span class="line">    return (val % 2) &#x3D;&#x3D; 0</span><br><span class="line"></span><br><span class="line">huge_range &#x3D; range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#39;Some even found&#39;)</span><br><span class="line">else:</span><br><span class="line">  print(&#39;No even found&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#x27;processing &#123;val&#125;&#x27; )</span><br><span class="line">    return (val % 2) == 0</span><br><span class="line"></span><br><span class="line">huge_range = range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#x27;Some even found&#x27;)</span><br><span class="line">else:</span><br><span class="line">  print(&#x27;No even found&#x27;)</span><br></pre></td></tr></table></figure>
+
 <p>The above will have the following result:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
 <p><a href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
 <p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
 <h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
-<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) &#x3D;&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) =&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number&#x3D; 1) &#123;</span><br><span class="line">  let x &#x3D; start - step;</span><br><span class="line">  while(x &lt; end - step) yield x +&#x3D; step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number= 1) &#123;</span><br><span class="line">  let x = start - step;</span><br><span class="line">  while(x &lt; end - step) yield x += step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(&#96;processing $&#123;a&#125;&#96;)</span><br><span class="line">  return a%2 &#x3D;&#x3D;&#x3D; 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange &#x3D; range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#39;Some even found&#39;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#39;No even found&#39;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`)</span><br><span class="line">  return a%2 === 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange = range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#x27;Some even found&#x27;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#x27;No even found&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>The above will have the following result:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
 <p><a href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
 <h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import &#123; range &#125; from &#39;rxjs&#x2F;observable&#x2F;range&#39;;</span><br><span class="line">import &#123; every, map &#125; from &#39;rxjs&#x2F;operators&#39;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(&#96;processing $&#123;a&#125;&#96;);</span><br><span class="line">  return a % 2 &#x3D;&#x3D;&#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) &#x3D;&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) &#x3D;&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#39;Some even found&#39;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#39;All Odd&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; range &#125; from &#x27;rxjs/observable/range&#x27;;</span><br><span class="line">import &#123; every, map &#125; from &#x27;rxjs/operators&#x27;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`);</span><br><span class="line">  return a % 2 === 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) =&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) =&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#x27;Some even found&#x27;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#x27;All Odd&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
 <p>The above will have the following result:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
 <p><a href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
 ]]></content>
+      <categories>
+        <category>Software Engineering</category>
+      </categories>
       <tags>
         <tag>python</tag>
         <tag>javascript</tag>
         <tag>typescript</tag>
         <tag>iterable</tag>
         <tag>generator</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Applying firmware upgrades on linux with fwupd</title>
-    <url>/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</url>
-    <content><![CDATA[<p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
-<p>Keeping the snippet here for future reference hope it helps somebody.</p>
-]]></content>
-      <tags>
-        <tag>fwupd</tag>
-        <tag>firmware</tag>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -63,22 +62,48 @@
 <li><p>Install waydroid<br> <code>sudo dnf install waydroid</code></p>
 </li>
 <li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo waydroid init -c https:&#x2F;&#x2F;ota.waydro.id&#x2F;system -v https:&#x2F;&#x2F;ota.waydro.id&#x2F;vendor -s GAPPS</span><br></pre></td></tr></table></figure>
-<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3></li>
-<li><p>Register the output of the following  command at<br><a href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;select * from main where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo waydroid init -c https://ota.waydro.id/system -v https://ota.waydro.id/vendor -s GAPPS</span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>To mitigate changing registration number add a cron job:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-<p>add the following line:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;5 * * * *       echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;update main set value&#x3D;\&quot;&lt;DEVICE_ID&gt;\&quot; where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| &#x2F;usr&#x2F;bin&#x2F;waydroid shell</span><br></pre></td></tr></table></figure>
-<p>replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</p>
+</ol>
+<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3><ol>
+<li>Register the output of the following  command at<br><a href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;ANDROID_RUNTIME_ROOT=/apex/com.android.runtime sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;select * from main where name = \&quot;android_id\&quot;;&quot;&#x27;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
+
+
 </li>
+</ol>
+<ol start="2">
+<li>To mitigate changing registration number add a cron job:<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+add the following line:<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*/5 * * * *       echo &#x27;ANDROID_RUNTIME_ROOT=/apex/com.android.runtime sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;update main set value=\&quot;&lt;DEVICE_ID&gt;\&quot; where name = \&quot;android_id\&quot;;&quot;&#x27;| /usr/bin/waydroid shell</span><br></pre></td></tr></table></figure>
+replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</li>
 </ol>
 <h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><p>You may now start waydroid using the desktop menu entry. It will take some time for your device to register so if you receive any google service errors reporting your device as unregistered try again later.</p>
 ]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
       <tags>
-        <tag>waydroid, fedora, linux, android</tag>
+        <tag>waydroid</tag>
+        <tag>fedora</tag>
+        <tag>linux</tag>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Applying firmware upgrades on linux with fwupd</title>
+    <url>/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</url>
+    <content><![CDATA[<p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
+
+<p>Keeping the snippet here for future reference hope it helps somebody.</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>fwupd</tag>
+        <tag>firmware</tag>
       </tags>
   </entry>
   <entry>
@@ -92,9 +117,13 @@
 <p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps your image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
 <h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
 <p>Considering the above the ideal command for most use cases I dealt with is:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
+
 <p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
 ]]></content>
+      <categories>
+        <category>DevOps</category>
+      </categories>
       <tags>
         <tag>python</tag>
         <tag>linux</tag>

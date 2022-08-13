@@ -45,7 +45,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/blog/atom.xml" title="A point in Time" type="application/atom+xml">
+    <!-- hexo injector head_end start -->
+    <style>aside.sidebar{width: 10rem;}aside.sidebar{left: -10rem;}aside.sidebar .navbar-toggle{left: 11.5rem;}</style><!-- hexo injector head_end end --><link rel="alternate" href="/blog/atom.xml" title="A point in Time" type="application/atom+xml">
 </head>
   </html>
 </html>
@@ -82,7 +83,11 @@
     <div class="article-meta">
       <a href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" class="article-date">
   <time datetime="2022-07-22T19:22:25.000Z" itemprop="datePublished">2022-07-22</time>
-</a>   
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/linux/">linux</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
@@ -111,7 +116,8 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
+
 <p>Keeping the snippet here for future reference hope it helps somebody.</p>
  
       <!-- reward -->
@@ -268,7 +274,7 @@
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" target="_blank" rel="noopener" href="https://csmonk.com">About</a>
+      <a class="nav-item-link" href="https://www.csmonk.com">About</a>
     </li>
     
   </ul>
@@ -282,7 +288,7 @@
       </a>
       
       
-      <a class="nav-item-link" target="_blank" href="/blog/blog/atom.xml" title="RSS Feed">
+      <a class="nav-item-link" target="_blank" href="/blog/atom.xml" title="RSS Feed">
         <i class="ri-rss-line"></i>
       </a>
       
