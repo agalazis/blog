@@ -118,9 +118,9 @@
     
     <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
-    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
-    
     <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
+    
+    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
     
   </entry>
   
