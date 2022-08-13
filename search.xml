@@ -14,6 +14,39 @@
       </tags>
   </entry>
   <entry>
+    <title>Waydroid setup on fedora (with google services)</title>
+    <url>/blog/2022/08/02/Waydroid-setup-on-fedora/</url>
+    <content><![CDATA[<p>Want to use an android app on your computer? <a href="https://waydro.id/">Waydroid</a>  has you covered I have also had a look in <a href="https://anbox.io/">anbox</a> in the past but it seemed to be a lot of trouble to setup and sort of unstable to use(at leas on machine). Installing wydroid is straight forward while using it seems flowless to me. I have managed to get it working on my <a href="https://www.notebookcheck.net/Lenovo-ThinkPad-X260-Core-i7-FHD-Subnotebook-Review.166601.0.html">thinkpad x260</a> I would like to get it working on my thinkpad t14 gen3 as well but that’s nothing to blame <a href="https://waydro.id/">waydroid</a> for since my t14 has general display issues.</p>
+<h3 id="Installation-Steps"><a href="#Installation-Steps" class="headerlink" title="Installation Steps"></a>Installation Steps</h3><p>Here are the steps I followed to set it up :</p>
+<ol>
+<li><p>Make sure you’re using kernel version 5.15 or higher</p>
+</li>
+<li><p>Add the Copr repository:<br> <code>sudo dnf copr enable aleasto/waydroid</code></p>
+</li>
+<li><p>Update sepolicy  if using fedora35 (I didn’t need to run this step)<br> <code>sudo dnf update</code></p>
+</li>
+<li><p>Install waydroid<br> <code>sudo dnf install waydroid</code></p>
+</li>
+<li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo waydroid init -c https:&#x2F;&#x2F;ota.waydro.id&#x2F;system -v https:&#x2F;&#x2F;ota.waydro.id&#x2F;vendor -s GAPPS</span><br></pre></td></tr></table></figure>
+<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3></li>
+<li><p>Register the output of the following  command at<br><a href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;select * from main where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>To mitigate changing registration number add a cron job:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+<p>add the following line:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;5 * * * *       echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;update main set value&#x3D;\&quot;&lt;DEVICE_ID&gt;\&quot; where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| &#x2F;usr&#x2F;bin&#x2F;waydroid shell</span><br></pre></td></tr></table></figure>
+<p>replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</p>
+</li>
+</ol>
+<h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><p>You may now start waydroid using the desktop menu entry. It will take some time for your device to register so if you receive any google service errors reporting your device as unregistered try again later.</p>
+]]></content>
+      <tags>
+        <tag>waydroid, fedora, linux, android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
     <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
     <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
@@ -46,39 +79,6 @@
         <tag>typescript</tag>
         <tag>iterable</tag>
         <tag>generator</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Waydroid setup on fedora (with google services)</title>
-    <url>/blog/2022/08/02/Waydroid-setup-on-fedora/</url>
-    <content><![CDATA[<p>Want to use an android app on your computer? <a href="https://waydro.id/">Waydroid</a>  has you covered I have also had a look in <a href="https://anbox.io/">anbox</a> in the past but it seemed to be a lot of trouble to setup and sort of unstable to use(at leas on machine). Installing wydroid is straight forward while using it seems flowless to me. I have managed to get it working on my <a href="https://www.notebookcheck.net/Lenovo-ThinkPad-X260-Core-i7-FHD-Subnotebook-Review.166601.0.html">thinkpad x260</a> I would like to get it working on my thinkpad t14 gen3 as well but that’s nothing to blame <a href="https://waydro.id/">waydroid</a> for since my t14 has general display issues.</p>
-<h3 id="Installation-Steps"><a href="#Installation-Steps" class="headerlink" title="Installation Steps"></a>Installation Steps</h3><p>Here are the steps I followed to set it up :</p>
-<ol>
-<li><p>Make sure you’re using kernel version 5.15 or higher</p>
-</li>
-<li><p>Add the Copr repository:<br> <code>sudo dnf copr enable aleasto/waydroid</code></p>
-</li>
-<li><p>Update sepolicy  if using fedora35 (I didn’t need to run this step)<br> <code>sudo dnf update</code></p>
-</li>
-<li><p>Install waydroid<br> <code>sudo dnf install waydroid</code></p>
-</li>
-<li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo waydroid init -c https:&#x2F;&#x2F;ota.waydro.id&#x2F;system -v https:&#x2F;&#x2F;ota.waydro.id&#x2F;vendor -s GAPPS</span><br></pre></td></tr></table></figure>
-<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3></li>
-<li><p>Register the output of the following  command at<br><a href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;select * from main where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>To mitigate changing registration number add a cron job:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-<p>add the following line:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;5 * * * *       echo &#39;ANDROID_RUNTIME_ROOT&#x3D;&#x2F;apex&#x2F;com.android.runtime sqlite3 &#x2F;data&#x2F;data&#x2F;com.google.android.gsf&#x2F;databases&#x2F;gservices.db &quot;update main set value&#x3D;\&quot;&lt;DEVICE_ID&gt;\&quot; where name &#x3D; \&quot;android_id\&quot;;&quot;&#39;| &#x2F;usr&#x2F;bin&#x2F;waydroid shell</span><br></pre></td></tr></table></figure>
-<p>replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</p>
-</li>
-</ol>
-<h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><p>You may now start waydroid using the desktop menu entry. It will take some time for your device to register so if you receive any google service errors reporting your device as unregistered try again later.</p>
-]]></content>
-      <tags>
-        <tag>waydroid, fedora, linux, android</tag>
       </tags>
   </entry>
   <entry>
