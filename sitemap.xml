@@ -104,41 +104,6 @@
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/tags/aws/</loc>
-    <lastmod>2022-08-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/event-bridge/</loc>
-    <lastmod>2022-08-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/fargate/</loc>
-    <lastmod>2022-08-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/ecs/</loc>
-    <lastmod>2022-08-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.csmonk.com/blog/tags/aws-cdk/</loc>
-    <lastmod>2022-08-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.csmonk.com/blog/tags/python/</loc>
     <lastmod>2022-08-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -195,6 +160,41 @@
   </url>
   
   <url>
+    <loc>https://www.csmonk.com/blog/tags/aws/</loc>
+    <lastmod>2022-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/event-bridge/</loc>
+    <lastmod>2022-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/fargate/</loc>
+    <lastmod>2022-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/ecs/</loc>
+    <lastmod>2022-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.csmonk.com/blog/tags/aws-cdk/</loc>
+    <lastmod>2022-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.csmonk.com/blog/tags/docker/</loc>
     <lastmod>2022-08-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -211,14 +211,14 @@
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/categories/DevOps/</loc>
+    <loc>https://www.csmonk.com/blog/categories/Software-Engineering/</loc>
     <lastmod>2022-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.csmonk.com/blog/categories/Software-Engineering/</loc>
+    <loc>https://www.csmonk.com/blog/categories/DevOps/</loc>
     <lastmod>2022-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
