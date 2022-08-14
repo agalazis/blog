@@ -15,7 +15,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title> A point in Time</title>
+      <title>Dynamic execution of Fargate tasks triggered via AWS Event Bridge |  A point in Time</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/blog/favicon.ico" />
@@ -60,62 +60,8 @@
         style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
       
     <main class="content on">
-      
-<section class="cover">
-    
-  <div class="cover-frame">
-    <div class="bg-box">
-      <img src="/assets/img/waves.jpg" alt="image frame" />
-    </div>
-    <div class="cover-inner text-center text-white">
-      <h1><a href="/blog/">A point in Time</a></h1>
-      <div id="subtitle-box">
-        
-        <span id="subtitle"></span>
-        
-      </div>
-      <div>
-        
-      </div>
-    </div>
-  </div>
-  <div class="cover-learn-more">
-    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
-  </div>
-</section>
-
-
-
-<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
-
-
-<!-- Subtitle -->
-
-  <script>
-    try {
-      var typed = new Typed("#subtitle", {
-        strings: ['“Time is an illusion.” ― Albert Einstein', '', ''],
-        startDelay: 1000,
-        typeSpeed: 75,
-        loop: false,
-        backSpeed: 99999,
-        showCursor: true
-      });
-    } catch (err) {
-      console.log(err)
-    }
-  </script>
-  
-<div id="main">
-  <section class="outer">
-  
-  
-  <article class="articles">
-    
-    
-    
-    
-    <article
+      <section class="outer">
+  <article
   id="post-Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge"
   class="article article-type-post"
   itemscope
@@ -126,10 +72,9 @@
     
     <header class="article-header">
        
-<h2 itemprop="name">
-  <a class="article-title" href="/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/"
-    >Dynamic execution of Fargate tasks triggered via AWS Event Bridge</a> 
-</h2>
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Dynamic execution of Fargate tasks triggered via AWS Event Bridge
+</h1>
  
 
       
@@ -142,9 +87,34 @@
   <div class="article-category">
     <a class="article-category-link" href="/blog/categories/DevOps/">DevOps</a> / <a class="article-category-link" href="/blog/categories/DevOps/cloud/">cloud</a>
   </div>
-   
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">8 min</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
       
+    <div class="tocbot"></div>
+
+
+
+
+  
     <div class="article-entry" itemprop="articleBody">
        
   <h2 id="AWS-Event-Bridge-ans-AWS-Fargate-A-match-made-in-heaven"><a href="#AWS-Event-Bridge-ans-AWS-Fargate-A-match-made-in-heaven" class="headerlink" title="AWS Event Bridge ans AWS Fargate: A match made in heaven"></a>AWS Event Bridge ans AWS Fargate: A match made in heaven</h2><p>Running a command in container on demand is a powerful feature of AWS Fargate. This opens a whole world of possibilities when combined with aws even bridge. Using en <code>EventRule</code> you can match existing aws events or custom events you intend to send to event bridge and set an AWS Fargate task as a target.</p>
@@ -179,308 +149,73 @@
 
     <!-- copyright -->
     
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
     <footer class="article-footer">
        
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        share
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.csmonk.com/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/aws-cdk/" rel="tag">aws-cdk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ecs/" rel="tag">ecs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/event-bridge/" rel="tag">event-bridge</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fargate/" rel="tag">fargate</a></li></ul>
 
     </footer>
   </div>
 
    
+  <nav class="article-nav">
     
-</article>
-
     
-    <article
-  id="post-Waydroid-setup-on-fedora"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
+      <a href="/blog/2022/08/02/Waydroid-setup-on-fedora/" class="article-nav-link">
+        <strong class="article-nav-caption">next post</strong>
+        <div class="article-nav-title">Waydroid setup on fedora (with google services)</div>
+      </a>
     
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/blog/2022/08/02/Waydroid-setup-on-fedora/"
-    >Waydroid setup on fedora (with google services)</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/blog/2022/08/02/Waydroid-setup-on-fedora/" class="article-date">
-  <time datetime="2022-08-02T06:06:23.000Z" itemprop="datePublished">2022-08-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/linux/">linux</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Want to use an android app on your computer? <a target="_blank" rel="noopener" href="https://waydro.id/">Waydroid</a>  has you covered I have also had a look in <a target="_blank" rel="noopener" href="https://anbox.io/">anbox</a> in the past but it seemed to be a lot of trouble to setup and sort of unstable to use(at leas on machine). Installing wydroid is straight forward while using it seems flowless to me. I have managed to get it working on my <a target="_blank" rel="noopener" href="https://www.notebookcheck.net/Lenovo-ThinkPad-X260-Core-i7-FHD-Subnotebook-Review.166601.0.html">thinkpad x260</a> I would like to get it working on my thinkpad t14 gen3 as well but that’s nothing to blame <a target="_blank" rel="noopener" href="https://waydro.id/">waydroid</a> for since my t14 has general display issues.</p>
-<h3 id="Installation-Steps"><a href="#Installation-Steps" class="headerlink" title="Installation Steps"></a>Installation Steps</h3><p>Here are the steps I followed to set it up :</p>
-<ol>
-<li><p>Make sure you’re using kernel version 5.15 or higher</p>
-</li>
-<li><p>Add the Copr repository:<br> <code>sudo dnf copr enable aleasto/waydroid</code></p>
-</li>
-<li><p>Update sepolicy  if using fedora35 (I didn’t need to run this step)<br> <code>sudo dnf update</code></p>
-</li>
-<li><p>Install waydroid<br> <code>sudo dnf install waydroid</code></p>
-</li>
-<li><p>Initialize waydroid. To include google services flag don’t forget the <code>gapps</code> flag wen initializing waydroid:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo waydroid init -c https://ota.waydro.id/system -v https://ota.waydro.id/vendor -s GAPPS</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="Google-services-registration"><a href="#Google-services-registration" class="headerlink" title="Google services registration"></a>Google services registration</h3><ol>
-<li>Register the output of the following  command at<br><a target="_blank" rel="noopener" href="https://www.google.com/android/uncertified/">https://www.google.com/android/uncertified/</a> :<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;ANDROID_RUNTIME_ROOT=/apex/com.android.runtime sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;select * from main where name = \&quot;android_id\&quot;;&quot;&#x27;| sudo waydroid shell</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ol>
-<ol start="2">
-<li>To mitigate changing registration number add a cron job:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su </span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-add the following line:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/5 * * * *       echo &#x27;ANDROID_RUNTIME_ROOT=/apex/com.android.runtime sqlite3 /data/data/com.google.android.gsf/databases/gservices.db &quot;update main set value=\&quot;&lt;DEVICE_ID&gt;\&quot; where name = \&quot;android_id\&quot;;&quot;&#x27;| /usr/bin/waydroid shell</span><br></pre></td></tr></table></figure>
-replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in previous step.</li>
-</ol>
-<h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><p>You may now start waydroid using the desktop menu entry. It will take some time for your device to register so if you receive any google service errors reporting your device as unregistered try again later.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/android/" rel="tag">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fedora/" rel="tag">fedora</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/waydroid/" rel="tag">waydroid</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Applying-firmware-upgrades-on-linux-with-fwupd"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/"
-    >Applying firmware upgrades on linux with fwupd</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/" class="article-date">
-  <time datetime="2022-07-22T19:22:25.000Z" itemprop="datePublished">2022-07-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/linux/">linux</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
-
-<p>Keeping the snippet here for future reference hope it helps somebody.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/firmware/" rel="tag">firmware</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fwupd/" rel="tag">fwupd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/"
-    >Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/" class="article-date">
-  <time datetime="2021-09-24T18:50:17.000Z" itemprop="datePublished">2021-09-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Software-Engineering/">Software Engineering</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>According to python docs <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
-<h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#x27;processing &#123;val&#125;&#x27; )</span><br><span class="line">    return (val % 2) == 0</span><br><span class="line"></span><br><span class="line">huge_range = range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#x27;Some even found&#x27;)</span><br><span class="line">else:</span><br><span class="line">  print(&#x27;No even found&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
-<p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
-<h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
-<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) =&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number= 1) &#123;</span><br><span class="line">  let x = start - step;</span><br><span class="line">  while(x &lt; end - step) yield x += step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`)</span><br><span class="line">  return a%2 === 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange = range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#x27;Some even found&#x27;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#x27;No even found&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
-<h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import &#123; range &#125; from &#x27;rxjs/observable/range&#x27;;</span><br><span class="line">import &#123; every, map &#125; from &#x27;rxjs/operators&#x27;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`);</span><br><span class="line">  return a % 2 === 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) =&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) =&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#x27;Some even found&#x27;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#x27;All Odd&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/generator/" rel="tag">generator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/iterable/" rel="tag">iterable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/typescript/" rel="tag">typescript</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-tips-on-dockerising-python-apps"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/blog/2020/12/23/tips-on-dockerising-python-apps/"
-    >Tips on dockerizing python apps</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/blog/2020/12/23/tips-on-dockerising-python-apps/" class="article-date">
-  <time datetime="2020-12-23T19:55:30.000Z" itemprop="datePublished">2020-12-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/DevOps/">DevOps</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>While I have been dockerizing a variety of apps I realized that python has its own special set of gotchas. Therefore I decided to write this post to list a few tips that will save time to first-timers.</p>
-<h2 id="PYTHONBUFFERRED-Missing-standard-output"><a href="#PYTHONBUFFERRED-Missing-standard-output" class="headerlink" title="PYTHONBUFFERRED: Missing standard output"></a>PYTHONBUFFERRED: Missing standard output</h2><p>One of the first gotchas you might notice is that if you are missing <code>PYTHONBUFFERED</code> configuration stdout/stderr messages may not be preset in terminal output in a timely manner or several lines may be entirely missing on application crash. Depending on you use-case, you may set  PYTHONBUFFERED to a non-empty string so that output will be unbuffered. The above issues are solved afterwards.</p>
-<h2 id="Slow-builds-The-curse-of-alpine"><a href="#Slow-builds-The-curse-of-alpine" class="headerlink" title="Slow builds: The curse of alpine"></a>Slow builds: The curse of alpine</h2><p>If you try to build your app in alpine you ‘ll notice slow builds, by magnitude slower than installing apps on your local machine. This is because Standard PyPI wheels don’t work on Alpine. </p>
-<p>Most Linux distributions use the GNU version (glibc) of the standard C library that is required by pretty much every C program, including Python. I contrast Alpine Linux uses musl and  since pipy wheels are compiled using giblic they are not supported on Alpine.</p>
-<p>Although most Python packages include binary wheels that significantly decrease install time on all alpine set-ups you ‘ll need need to compile all the C code in every Python package that you use.</p>
-<p>To my experience the most convenient distro base image for python  is <code>debian slim</code>. I t keeps your image small whilst not sacrificing on distributed wheel support, hence giving faster build times. </p>
-<h2 id="Optimal-pipenv-dependency-setup"><a href="#Optimal-pipenv-dependency-setup" class="headerlink" title="Optimal pipenv dependency setup"></a>Optimal pipenv dependency setup</h2><p>In first instance, using pipenv virtual environment seemed quite unstable. Issues ranged form not setting current directory in python path - to crashing shells. I am sure all the above might have already been fixed, and I already knew a few workarounds that could mitigate them. Another thing to consider is optimal image size, global setup of dependencies in an isolated image would hardly cause any issue whilst it can keep image size to the minimum. In order to install to the parent system rather than creating a virtual environment, the <code>--system</code> flag needs to be used. Another thing  we need to take care of is to ensure lock file entries are exactly what’s installed using <code>--ignore-pipfile</code>. To ensure lock file is up-to date we can use <code>--deploy</code> which will fail the command if any dependency is outdated.</p>
-<p>Considering the above the ideal command for most use cases I dealt with is:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --system --deploy --ignore-pipfile</span><br></pre></td></tr></table></figure>
-
-<p>I am sure this is just a few of the things I could list here but I ll keep this page updated.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-  </article>
-  
+  </nav>
 
   
+   
+     
+</article>
+
 </section>
-</div>
-
       <footer class="footer">
   <div class="outer">
     <ul>
@@ -597,6 +332,22 @@ replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in
 <script src="/blog/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/blog/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link

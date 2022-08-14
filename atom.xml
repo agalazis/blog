@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-08-13T14:09:08.861Z</updated>
+  <updated>2022-08-14T09:48:17.147Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Dynamic execution of Fargate tasks triggered via AWS Event Bridge</title>
+    <link href="https://www.csmonk.com/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/"/>
+    <id>https://www.csmonk.com/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/</id>
+    <published>2022-08-13T20:03:01.000Z</published>
+    <updated>2022-08-14T09:48:17.147Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;AWS-Event-Bridge-ans-AWS-Fargate-A-match-made-in-heaven&quot;&gt;&lt;a href=&quot;#AWS-Event-Bridge-ans-AWS-Fargate-A-match-made-in-heaven&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="DevOps" scheme="https://www.csmonk.com/blog/categories/DevOps/"/>
+    
+    <category term="cloud" scheme="https://www.csmonk.com/blog/categories/DevOps/cloud/"/>
+    
+    
+    <category term="aws" scheme="https://www.csmonk.com/blog/tags/aws/"/>
+    
+    <category term="event-bridge" scheme="https://www.csmonk.com/blog/tags/event-bridge/"/>
+    
+    <category term="fargate" scheme="https://www.csmonk.com/blog/tags/fargate/"/>
+    
+    <category term="ecs" scheme="https://www.csmonk.com/blog/tags/ecs/"/>
+    
+    <category term="aws-cdk" scheme="https://www.csmonk.com/blog/tags/aws-cdk/"/>
+    
+  </entry>
   
   <entry>
     <title>Waydroid setup on fedora (with google services)</title>
