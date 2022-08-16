@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-08-14T10:10:56.900Z</updated>
+  <updated>2022-08-16T10:58:46.526Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="https://www.csmonk.com/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/"/>
     <id>https://www.csmonk.com/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/</id>
     <published>2022-08-13T20:03:01.000Z</published>
-    <updated>2022-08-14T10:10:56.900Z</updated>
+    <updated>2022-08-16T10:58:46.526Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;AWS-Event-Bridge-ans-AWS-Fargate-A-match-made-in-heaven&quot;&gt;&lt;a href=&quot;#AWS-Event-Bridge-ans-AWS-Fargate-A-match-made-in-heaven&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;AWS-Event-Bridge-and-AWS-Fargate-A-match-made-in-heaven&quot;&gt;&lt;a href=&quot;#AWS-Event-Bridge-and-AWS-Fargate-A-match-made-in-heaven&quot;</summary>
         
       
     
