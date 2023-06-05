@@ -68,25 +68,28 @@
 <li><code>/usr/libexec/docker/cli-plugins</code></li>
 </ul>
 <h2 id="Why-do-I-need-Buildx"><a href="#Why-do-I-need-Buildx" class="headerlink" title="Why do I need Buildx?"></a>Why do I need Buildx?</h2><p>The primary reason for using the Buildx plugin is to enable multi-platform builds and parallel building<br>of multiple targets with the <code>bake</code> command. You can find more information about <code>bake</code> <a href="https://docs.docker.com/engine/reference/commandline/buildx_bake/">here</a>.</p>
-<h2 id="What’s-up-with-Moby"><a href="#What’s-up-with-Moby" class="headerlink" title="What’s up with Moby?"></a>What’s up with Moby?</h2><p>Moby is the open-source base project of Docker. While it is not recommended as a developer tool, it is<br>more suitable for tinkering with Docker internals. Despite that it’s the tool of my choice since it is easier to adopt on Fedora compared to Docker CE.<br>This is mainly because some upcoming fixes, designed to address updates more promptly, are implemented in Moby first.<br>Fedora aims to provide the latest Linux packages faster than other distributions. The only drawback I have<br>observed so far is that all plugins are disabled by default in Moby, unlike Docker CE.</p>
+<h2 id="What’s-up-with-Moby"><a href="#What’s-up-with-Moby" class="headerlink" title="What’s up with Moby?"></a>What’s up with Moby?</h2><p>Moby is the open-source base project of Docker. While it is not recommended as a developer tool, it is<br>more suitable for tinkering with Docker internals. Despite that it’s the tool of my choice since it is easier to adopt on Fedora<br>compared to Docker CE. This is mainly because some upcoming fixes, designed to address updates more promptly, are implemented in Moby<br>first. Fedora aims to provide the latest Linux packages faster than other distributions. The only drawback I have<br>observed so far is that all plugins are disabled by default in Moby, unlike Docker CE.</p>
 <h2 id="How-to-install-Buildx"><a href="#How-to-install-Buildx" class="headerlink" title="How to install Buildx"></a>How to install Buildx</h2><ol>
-<li><p>Download the Buildx binary into your user’s Docker plugins directory (Alternatively, you can download<br>it to one of the global directories mentioned above):<br><code>shell wget https://github.com/docker/buildx/releases/download/v0.10.5/buildx-v0.10.5.linux-amd64 \ -O ~/.docker/cli-plugins/docker-buildx</code></p>
+<li><p>Download the Buildx binary into your user’s Docker plugins directory (Alternatively, you can download<br>it to one of the global directories mentioned above):  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/docker/buildx/releases/download/v0.10.5/buildx-v0.10.5.linux-amd64 \</span><br><span class="line">-O ~/.docker/cli-plugins/docker-buildx</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Make it executable :<br><code>chmod +x ~/.docker/cli-plugins/docker-buildx</code></p>
+<li><p>Make it executable :</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod +x ~/.docker/cli-plugins/docker-buildx</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Check that the plugin is enabled:<br><code>docker info</code></p>
+<li><p>Check that the plugin is enabled:  </p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h2 id="First-build"><a href="#First-build" class="headerlink" title="First build"></a>First build</h2><ol>
-<li><p>Create builder:<br><code>docker buildx create --name multiarch --driver docker-container --use</code></p>
+<li><p>Create builder:  </p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker buildx create --name multiarch --driver docker-container --use</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Login to your registry in my case ECR:  </p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email 2&gt; /dev/null) || aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login \</span><br><span class="line">    --username AWS \</span><br><span class="line">    --password-stdin $AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email 2&gt; /dev/null) || aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login \</span><br><span class="line">    --username AWS \</span><br><span class="line">    --password-stdin $AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>Build and push to repo. Remember that multi-architecture build make sense only for pushing to a repository. Then  when you pull the image back the one applicable to your host machine will be pulled.<br><code>docker buildx build --platform linux/amd64,linux/arm64 --push -t &quot;$AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$TAG&quot; -</code></li>
+<li><p>Build and push to repo. Remember that multi-architecture build make sense only for pushing to a repository. Then  when you pull the image back the one applicable to your host machine will be pulled.  </p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker buildx build --platform linux/amd64,linux/arm64 --push -t &quot;$AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$TAG&quot; -</span><br></pre></td></tr></table></figure></li>
 </ol>
 ]]></content>
       <categories>
@@ -96,53 +99,6 @@
         <tag>linux</tag>
         <tag>docker</tag>
         <tag>docker-plugin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
-    <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
-    <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
-<h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#x27;processing &#123;val&#125;&#x27; )</span><br><span class="line">    return (val % 2) == 0</span><br><span class="line"></span><br><span class="line">huge_range = range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#x27;Some even found&#x27;)</span><br><span class="line">else:</span><br><span class="line">  print(&#x27;No even found&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
-<p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
-<h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
-<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) =&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number= 1) &#123;</span><br><span class="line">  let x = start - step;</span><br><span class="line">  while(x &lt; end - step) yield x += step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`)</span><br><span class="line">  return a%2 === 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange = range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#x27;Some even found&#x27;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#x27;No even found&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
-<h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; range &#125; from &#x27;rxjs/observable/range&#x27;;</span><br><span class="line">import &#123; every, map &#125; from &#x27;rxjs/operators&#x27;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`);</span><br><span class="line">  return a % 2 === 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) =&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) =&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#x27;Some even found&#x27;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#x27;All Odd&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
-]]></content>
-      <categories>
-        <category>Software Engineering</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>javascript</tag>
-        <tag>typescript</tag>
-        <tag>iterable</tag>
-        <tag>generator</tag>
       </tags>
   </entry>
   <entry>
@@ -209,6 +165,53 @@ replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in
         <tag>linux</tag>
         <tag>docker</tag>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
+    <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
+    <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
+<h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#x27;processing &#123;val&#125;&#x27; )</span><br><span class="line">    return (val % 2) == 0</span><br><span class="line"></span><br><span class="line">huge_range = range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#x27;Some even found&#x27;)</span><br><span class="line">else:</span><br><span class="line">  print(&#x27;No even found&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>The above will have the following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
+<p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
+<h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
+<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) =&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number= 1) &#123;</span><br><span class="line">  let x = start - step;</span><br><span class="line">  while(x &lt; end - step) yield x += step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`)</span><br><span class="line">  return a%2 === 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange = range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#x27;Some even found&#x27;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#x27;No even found&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The above will have the following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
+<h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; range &#125; from &#x27;rxjs/observable/range&#x27;;</span><br><span class="line">import &#123; every, map &#125; from &#x27;rxjs/operators&#x27;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`);</span><br><span class="line">  return a % 2 === 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) =&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) =&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#x27;Some even found&#x27;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#x27;All Odd&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>The above will have the following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
+]]></content>
+      <categories>
+        <category>Software Engineering</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>javascript</tag>
+        <tag>typescript</tag>
+        <tag>iterable</tag>
+        <tag>generator</tag>
       </tags>
   </entry>
 </search>

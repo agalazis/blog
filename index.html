@@ -155,25 +155,28 @@
 <li><code>/usr/libexec/docker/cli-plugins</code></li>
 </ul>
 <h2 id="Why-do-I-need-Buildx"><a href="#Why-do-I-need-Buildx" class="headerlink" title="Why do I need Buildx?"></a>Why do I need Buildx?</h2><p>The primary reason for using the Buildx plugin is to enable multi-platform builds and parallel building<br>of multiple targets with the <code>bake</code> command. You can find more information about <code>bake</code> <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/buildx_bake/">here</a>.</p>
-<h2 id="What’s-up-with-Moby"><a href="#What’s-up-with-Moby" class="headerlink" title="What’s up with Moby?"></a>What’s up with Moby?</h2><p>Moby is the open-source base project of Docker. While it is not recommended as a developer tool, it is<br>more suitable for tinkering with Docker internals. Despite that it’s the tool of my choice since it is easier to adopt on Fedora compared to Docker CE.<br>This is mainly because some upcoming fixes, designed to address updates more promptly, are implemented in Moby first.<br>Fedora aims to provide the latest Linux packages faster than other distributions. The only drawback I have<br>observed so far is that all plugins are disabled by default in Moby, unlike Docker CE.</p>
+<h2 id="What’s-up-with-Moby"><a href="#What’s-up-with-Moby" class="headerlink" title="What’s up with Moby?"></a>What’s up with Moby?</h2><p>Moby is the open-source base project of Docker. While it is not recommended as a developer tool, it is<br>more suitable for tinkering with Docker internals. Despite that it’s the tool of my choice since it is easier to adopt on Fedora<br>compared to Docker CE. This is mainly because some upcoming fixes, designed to address updates more promptly, are implemented in Moby<br>first. Fedora aims to provide the latest Linux packages faster than other distributions. The only drawback I have<br>observed so far is that all plugins are disabled by default in Moby, unlike Docker CE.</p>
 <h2 id="How-to-install-Buildx"><a href="#How-to-install-Buildx" class="headerlink" title="How to install Buildx"></a>How to install Buildx</h2><ol>
-<li><p>Download the Buildx binary into your user’s Docker plugins directory (Alternatively, you can download<br>it to one of the global directories mentioned above):<br><code>shell wget https://github.com/docker/buildx/releases/download/v0.10.5/buildx-v0.10.5.linux-amd64 \ -O ~/.docker/cli-plugins/docker-buildx</code></p>
+<li><p>Download the Buildx binary into your user’s Docker plugins directory (Alternatively, you can download<br>it to one of the global directories mentioned above):  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/docker/buildx/releases/download/v0.10.5/buildx-v0.10.5.linux-amd64 \</span><br><span class="line">-O ~/.docker/cli-plugins/docker-buildx</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Make it executable :<br><code>chmod +x ~/.docker/cli-plugins/docker-buildx</code></p>
+<li><p>Make it executable :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ~/.docker/cli-plugins/docker-buildx</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Check that the plugin is enabled:<br><code>docker info</code></p>
+<li><p>Check that the plugin is enabled:  </p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h2 id="First-build"><a href="#First-build" class="headerlink" title="First build"></a>First build</h2><ol>
-<li><p>Create builder:<br><code>docker buildx create --name multiarch --driver docker-container --use</code></p>
+<li><p>Create builder:  </p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker buildx create --name multiarch --driver docker-container --use</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Login to your registry in my case ECR:  </p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email 2&gt; /dev/null) || aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login \</span><br><span class="line">    --username AWS \</span><br><span class="line">    --password-stdin $AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email 2&gt; /dev/null) || aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login \</span><br><span class="line">    --username AWS \</span><br><span class="line">    --password-stdin $AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>Build and push to repo. Remember that multi-architecture build make sense only for pushing to a repository. Then  when you pull the image back the one applicable to your host machine will be pulled.<br><code>docker buildx build --platform linux/amd64,linux/arm64 --push -t &quot;$AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$TAG&quot; -</code></li>
+<li><p>Build and push to repo. Remember that multi-architecture build make sense only for pushing to a repository. Then  when you pull the image back the one applicable to your host machine will be pulled.  </p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker buildx build --platform linux/amd64,linux/arm64 --push -t &quot;$AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$TAG&quot; -</span><br></pre></td></tr></table></figure></li>
 </ol>
  
       <!-- reward -->
