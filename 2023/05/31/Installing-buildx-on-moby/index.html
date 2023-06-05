@@ -15,7 +15,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>Tag: fargate |  A point in Time</title>
+      <title>Installing buildx on moby |  A point in Time</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/blog/favicon.ico" />
@@ -61,56 +61,164 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-Installing-buildx-on-moby"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">#&nbspfargate</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/blog/archives/2022" class="archive-year">2022</a>
-    </div>
-    <div class="archives">
-      
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/" class="archive-article-date">
-  <time datetime="2022-08-13T20:03:01.000Z" itemprop="datePublished">08/13</time>
-</a>
+    <header class="article-header">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/"
-    >Dynamic execution of Fargate tasks triggered via AWS Event Bridge</a> 
-</h2>
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Installing buildx on moby
+</h1>
  
 
+      
     </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/aws-cdk/" rel="tag">aws-cdk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ecs/" rel="tag">ecs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/event-bridge/" rel="tag">event-bridge</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/fargate/" rel="tag">fargate</a></li></ul>
-
-    
+     
+    <div class="article-meta">
+      <a href="/blog/2023/05/31/Installing-buildx-on-moby/" class="article-date">
+  <time datetime="2023-05-31T20:15:40.000Z" itemprop="datePublished">2023-05-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/DevOps/">DevOps</a>
   </div>
-</article>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">378</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">2 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
       
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="What-is-a-Docker-Plugin"><a href="#What-is-a-Docker-Plugin" class="headerlink" title="What is a Docker Plugin?"></a>What is a Docker Plugin?</h2><p>A Docker plugin is an executable that follows the <code>docker-&#123;plugin_name&#125;</code> naming convention. It can be<br>placed in the <code>~/.docker/plugins</code> directory for the current user or in one of the following global directories:</p>
+<ul>
+<li><code>/usr/local/lib/docker/cli-plugins</code></li>
+<li><code>/usr/local/libexec/docker/cli-plugins</code></li>
+<li><code>/usr/lib/docker/cli-plugins</code></li>
+<li><code>/usr/libexec/docker/cli-plugins</code></li>
+</ul>
+<h2 id="Why-do-I-need-Buildx"><a href="#Why-do-I-need-Buildx" class="headerlink" title="Why do I need Buildx?"></a>Why do I need Buildx?</h2><p>The primary reason for using the Buildx plugin is to enable multi-platform builds and parallel building<br>of multiple targets with the <code>bake</code> command. You can find more information about <code>bake</code> <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/buildx_bake/">here</a>.</p>
+<h2 id="What’s-up-with-Moby"><a href="#What’s-up-with-Moby" class="headerlink" title="What’s up with Moby?"></a>What’s up with Moby?</h2><p>Moby is the open-source base project of Docker. While it is not recommended as a developer tool, it is<br>more suitable for tinkering with Docker internals. Despite that it’s the tool of my choice since it is easier to adopt on Fedora compared to Docker CE.<br>This is mainly because some upcoming fixes, designed to address updates more promptly, are implemented in Moby first.<br>Fedora aims to provide the latest Linux packages faster than other distributions. The only drawback I have<br>observed so far is that all plugins are disabled by default in Moby, unlike Docker CE.</p>
+<h2 id="How-to-install-Buildx"><a href="#How-to-install-Buildx" class="headerlink" title="How to install Buildx"></a>How to install Buildx</h2><ol>
+<li><p>Download the Buildx binary into your user’s Docker plugins directory (Alternatively, you can download<br>it to one of the global directories mentioned above):<br><code>shell wget https://github.com/docker/buildx/releases/download/v0.10.5/buildx-v0.10.5.linux-amd64 \ -O ~/.docker/cli-plugins/docker-buildx</code></p>
+</li>
+<li><p>Make it executable :<br><code>chmod +x ~/.docker/cli-plugins/docker-buildx</code></p>
+</li>
+<li><p>Check that the plugin is enabled:<br><code>docker info</code></p>
+</li>
+</ol>
+<h2 id="First-build"><a href="#First-build" class="headerlink" title="First build"></a>First build</h2><ol>
+<li><p>Create builder:<br><code>docker buildx create --name multiarch --driver docker-container --use</code></p>
+</li>
+<li><p>Login to your registry in my case ECR:  </p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email 2&gt; /dev/null) || aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login \</span><br><span class="line">    --username AWS \</span><br><span class="line">    --password-stdin $AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Build and push to repo. Remember that multi-architecture build make sense only for pushing to a repository. Then  when you pull the image back the one applicable to your host machine will be pulled.<br><code>docker buildx build --platform linux/amd64,linux/arm64 --push -t &quot;$AWS_ACC.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$TAG&quot; -</code></li>
+</ol>
+ 
+      <!-- reward -->
       
     </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        share
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.csmonk.com/blog/2023/05/31/Installing-buildx-on-moby/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/docker-plugin/" rel="tag">docker-plugin</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
   </div>
-  
-  
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/" class="article-nav-link">
+        <strong class="article-nav-caption">next post</strong>
+        <div class="article-nav-title">Dynamic execution of Fargate tasks triggered via AWS Event Bridge</div>
+      </a>
+    
+  </nav>
 
   
+   
+     
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -228,6 +336,22 @@
 <script src="/blog/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/blog/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link

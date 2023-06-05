@@ -6,7 +6,7 @@
   <link href="https://www.csmonk.com/blog/atom.xml" rel="self"/>
   
   <link href="https://www.csmonk.com/blog/"/>
-  <updated>2022-08-22T17:07:38.082Z</updated>
+  <updated>2023-06-01T07:29:52.510Z</updated>
   <id>https://www.csmonk.com/blog/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Installing buildx on moby</title>
+    <link href="https://www.csmonk.com/blog/2023/05/31/Installing-buildx-on-moby/"/>
+    <id>https://www.csmonk.com/blog/2023/05/31/Installing-buildx-on-moby/</id>
+    <published>2023-05-31T20:15:40.000Z</published>
+    <updated>2023-06-01T07:29:52.510Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;What-is-a-Docker-Plugin&quot;&gt;&lt;a href=&quot;#What-is-a-Docker-Plugin&quot; class=&quot;headerlink&quot; title=&quot;What is a Docker Plugin?&quot;&gt;&lt;/a&gt;What is a</summary>
+        
+      
+    
+    
+    
+    <category term="DevOps" scheme="https://www.csmonk.com/blog/categories/DevOps/"/>
+    
+    
+    <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
+    
+    <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
+    
+    <category term="docker-plugin" scheme="https://www.csmonk.com/blog/tags/docker-plugin/"/>
+    
+  </entry>
   
   <entry>
     <title>Dynamic execution of Fargate tasks triggered via AWS Event Bridge</title>
@@ -167,9 +196,9 @@
     
     <category term="linux" scheme="https://www.csmonk.com/blog/tags/linux/"/>
     
-    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
-    
     <category term="docker" scheme="https://www.csmonk.com/blog/tags/docker/"/>
+    
+    <category term="python" scheme="https://www.csmonk.com/blog/tags/python/"/>
     
   </entry>
   
