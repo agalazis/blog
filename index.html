@@ -116,6 +116,69 @@
     
     
     <article
+  id="post-Large-S3-file-handling-for-lambdas-no-one-size-to-rule-them-all"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/blog/2024/09/08/Large-S3-file-handling-for-lambdas-no-one-size-to-rule-them-all/"
+    >Large S3 file handling for lambdas. No one rule to fit them all</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/2024/09/08/Large-S3-file-handling-for-lambdas-no-one-size-to-rule-them-all/" class="article-date">
+  <time datetime="2024-09-08T11:57:23.000Z" itemprop="datePublished">2024-09-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/DevOps/">DevOps</a> / <a class="article-category-link" href="/blog/categories/DevOps/cloud/">cloud</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Recently I was working on a project that was supposed to preload a large file on a lambda that was wired to  api gateway. I came up with the following problem worth researching. What is the best approach to make cold lambdas launch at a viable time while loading the file in memory?  </p>
+<h2 id="Is-compression-worth-it"><a href="#Is-compression-worth-it" class="headerlink" title="Is compression worth it?"></a>Is compression worth it?</h2><p>In my case I had a 165MB ml model pickle file that should be loaded on start-up. First attempt was without any compression which resulted in ~4 seconds cold start of which ~3 seconds where actually network time.<br>The breakdown was as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line">        1    0.000    0.000    4.207    4.207 /var/task/lambdas/pred.py:16(calculate_pred_score_lambda)</span><br><span class="line">        2    0.000    0.000    4.067    2.033 /var/task/libs/base/util.py:66(read_pickle)</span><br><span class="line">        2    0.001    0.001    3.941    1.971 /var/lang/lib/python3.11/site-packages/dill/_dill.py:266(load)</span><br><span class="line">        2    0.000    0.000    3.940    1.970 /var/lang/lib/python3.11/site-packages/dill/_dill.py:418(load)</span><br><span class="line">        2    0.839    0.419    3.940    1.970 &#123;function Unpickler.load at 0x7f06a961be20&#125;</span><br><span class="line">     1930    0.006    0.000    3.071    0.002 /var/runtime/botocore/response.py:93(read)</span><br><span class="line">    27111    0.045    0.000    3.066    0.000 /var/lang/lib/python3.11/socket.py:692(readinto)</span><br><span class="line">     1930    0.018    0.000    3.065    0.002 /var/runtime/urllib3/response.py:535(read)</span><br><span class="line">1999/1965    0.040    0.000    3.011    0.002 &#123;method &#x27;read&#x27; of &#x27;_io.BufferedReader&#x27; objects&#125;</span><br><span class="line">     1930    0.003    0.000    3.010    0.002 /var/runtime/urllib3/response.py:487(_fp_read)</span><br><span class="line">     1930    0.007    0.000    3.007    0.002 /var/lang/lib/python3.11/http/client.py:450(read)</span><br><span class="line">    27111    0.046    0.000    2.985    0.000 /var/lang/lib/python3.11/ssl.py:1267(recv_into)</span><br><span class="line">    27111    0.030    0.000    2.929    0.000 /var/lang/lib/python3.11/ssl.py:1125(read)</span><br><span class="line">    27111    2.896    0.000    2.896    0.000 &#123;method &#x27;read&#x27; of &#x27;_ssl._SSLSocket&#x27; objects&#125;</span><br></pre></td></tr></table></figure>
+
+<p> The first attempt was to compress the file with <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/bz2.html">bz2</a> without loading any extra dependencies to my project. The result proved that compression at (least with bz2) was not worth it. Network time dropped from ~3 seconds to ~300ms which is a ~10x improvement but the time taken to decompress the file was 14 seconds, resulting in a ~10 seconds slower start.<br> You can see full break down below:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line">     1    0.000    0.000   15.447   15.447 /var/task/lambdas/pred.py:16(calculate_pred_score_lambda)</span><br><span class="line">     2    0.000    0.000   15.278    7.639 /var/task/libs/base/util.py:66(read_pickle)</span><br><span class="line">     2    0.009    0.005   15.073    7.537 /var/lang/lib/python3.11/site-packages/dill/_dill.py:266(load)</span><br><span class="line">     2    0.000    0.000   15.064    7.532 /var/lang/lib/python3.11/site-packages/dill/_dill.py:418(load)</span><br><span class="line">     2    0.203    0.102   15.064    7.532 &#123;function Unpickler.load at 0x7f13acc8bec0&#125;</span><br><span class="line">   960    0.368    0.000   14.814    0.015 /var/lang/lib/python3.11/_compression.py:66(readinto)</span><br><span class="line">   320    0.001    0.000   14.680    0.046 /var/lang/lib/python3.11/bz2.py:178(readinto)</span><br><span class="line">   320    0.004    0.000   14.679    0.046 &#123;method &#x27;readinto&#x27; of &#x27;_io.BufferedReader&#x27; objects&#125;</span><br><span class="line">   960    0.023    0.000   14.444    0.015 /var/lang/lib/python3.11/_compression.py:72(read)</span><br><span class="line">  8106   14.004    0.002   14.004    0.002 &#123;method &#x27;decompress&#x27; of &#x27;_bz2.BZ2Decompressor&#x27; objects&#125;</span><br><span class="line">  7470    0.011    0.000    0.415    0.000 /var/runtime/botocore/response.py:93(read)</span><br><span class="line">  7470    0.048    0.000    0.403    0.000 /var/runtime/urllib3/response.py:535(read)</span><br><span class="line"> 13620    0.020    0.000    0.395    0.000 /var/lang/lib/python3.11/socket.py:692(readinto)</span><br><span class="line"> 13620    0.021    0.000    0.358    0.000 /var/lang/lib/python3.11/ssl.py:1267(recv_into)</span><br><span class="line"> 13620    0.013    0.000    0.333    0.000 /var/lang/lib/python3.11/ssl.py:1125(read)</span><br><span class="line"> 13620    0.318    0.000    0.318    0.000 &#123;method &#x27;read&#x27; of &#x27;_ssl._SSLSocket&#x27; objects&#125;</span><br></pre></td></tr></table></figure>
+<p>The verdict up-to this point is that s3 transfers to lambdas are fast enough to outbeat bz2 compression and given that transfer cost from s3 to aws lambda is zero skipping compression might be viable solution depending on your needs.</p>
+<h2 id="Using-a-better-compression-algorithm-LZ4-to-the-rescue"><a href="#Using-a-better-compression-algorithm-LZ4-to-the-rescue" class="headerlink" title="Using a better compression algorithm. LZ4 to the rescue"></a>Using a better compression algorithm. LZ4 to the rescue</h2><p>The next step was to find a better algorithm since the max acceptable cold start was 2 seconds in my case, hence leveraging the best of both worlds (ie. fast s3 transfers and compression) was a one way street. After looking into it I stumbled on <a target="_blank" rel="noopener" href="https://github.com/python-lz4/python-lz4">LZ4</a>. LZ4 provides a good trade-off between speed and compression ratio. We got a not significantly bigger file while decompression speed is significantly faster. As a result we got ~30x faster decompression vs bz2 time and ~10x faster network time vs uncompressed. The total cold start response time was ~half of that of uncompressed file load and ~1/7th of that of bz2 compression.<br>Here is the breakdown: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line">        1    0.000    0.000    1.954    1.954 /var/task/lambdas/pred.py:16(calculate_pred_score_lambda)</span><br><span class="line">        2    0.000    0.000    1.896    0.948 /var/task/libs/base/util.py:66(read_pickle)</span><br><span class="line">        2    0.001    0.000    1.836    0.918 /var/lang/lib/python3.11/site-packages/dill/_dill.py:266(load)</span><br><span class="line">        2    0.000    0.000    1.836    0.918 /var/lang/lib/python3.11/site-packages/dill/_dill.py:418(load)</span><br><span class="line">        2    0.370    0.185    1.836    0.918 &#123;function Unpickler.load at 0x7ff1f810a3e0&#125;</span><br><span class="line">      655    0.001    0.000    1.444    0.002 /var/lang/lib/python3.11/site-packages/lz4/frame/__init__.py:650(read)</span><br><span class="line">17762/660    0.053    0.000    1.442    0.002 &#123;method &#x27;read&#x27; of &#x27;_io.BufferedReader&#x27; objects&#125;</span><br><span class="line">     6427    0.264    0.000    1.433    0.000 /var/lang/lib/python3.11/_compression.py:66(readinto)</span><br><span class="line">     6427    0.035    0.000    1.161    0.000 /var/lang/lib/python3.11/_compression.py:72(read)</span><br><span class="line">    17107    0.021    0.000    0.777    0.000 /var/runtime/botocore/response.py:93(read)</span><br><span class="line">    17107    0.094    0.000    0.754    0.000 /var/runtime/urllib3/response.py:535(read)</span><br><span class="line">    17107    0.020    0.000    0.484    0.000 /var/runtime/urllib3/response.py:487(_fp_read)</span><br><span class="line">    17107    0.032    0.000    0.464    0.000 /var/lang/lib/python3.11/http/client.py:450(read)</span><br><span class="line">    32928    0.046    0.000    0.422    0.000 /var/lang/lib/python3.11/socket.py:692(readinto)</span><br><span class="line">    17755    0.036    0.000    0.348    0.000 /var/lang/lib/python3.11/site-packages/lz4/frame/__init__.py:372(decompress)</span><br><span class="line">    32928    0.045    0.000    0.341    0.000 /var/lang/lib/python3.11/ssl.py:1267(recv_into)</span><br><span class="line">    17755    0.306    0.000    0.306    0.000 &#123;built-in method lz4.frame._frame.decompress_chunk&#125;</span><br><span class="line">    32928    0.031    0.000    0.286    0.000 /var/lang/lib/python3.11/ssl.py:1125(read)</span><br><span class="line">    32928    0.250    0.000    0.250    0.000 &#123;method &#x27;read&#x27; of &#x27;_ssl._SSLSocket&#x27; objects&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>To take advantage of compression the decompression cost must outbeat the already low data transfer cost from lambda to s3. Given that transfer speed might event increase in the future it’s a good approach to experiment before applying any compression. In our case LZ4 proved to bring the best out of both worlds. Other approaches to consider especially if the size if your ml models grow is using ready-made services that are built specifically to manage your ml workflow from training to deployment. Here are the <a target="_blank" rel="noopener" href="https://sagemaker.readthedocs.io/en/stable/frameworks/tensorflow/deploying_tensorflow_serving.html#making-predictions-against-a-sagemaker-endpoint">docs</a> with examples of querying predictions from sagemaker instead of your own lambda ;) .  </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/aws/" rel="tag">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/aws-lambda/" rel="tag">aws-lambda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/mlops/" rel="tag">mlops</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/optimization/" rel="tag">optimization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/s3/" rel="tag">s3</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/serverless/" rel="tag">serverless</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Installing-buildx-on-moby"
   class="article article-type-post"
   itemscope
@@ -569,7 +632,7 @@ replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in
     <ul>
       <li>
         Copyrights &copy;
-        2012-2023
+        2012-2025
         <i class="ri-heart-fill heart_icon"></i> Andreas Galazis
       </li>
     </ul>

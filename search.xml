@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Applying firmware upgrades on linux with fwupd</title>
-    <url>/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</url>
-    <content><![CDATA[<p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
-
-<p>Keeping the snippet here for future reference hope it helps somebody.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>fwupd</tag>
-        <tag>firmware</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Dynamic execution of Fargate tasks triggered via AWS Event Bridge</title>
     <url>/blog/2022/08/13/Dynamic-execution-of-Fargate-tasks-triggered-via-AWS-Event-Bridge/</url>
     <content><![CDATA[<h2 id="AWS-Event-Bridge-and-AWS-Fargate-A-match-made-in-heaven"><a href="#AWS-Event-Bridge-and-AWS-Fargate-A-match-made-in-heaven" class="headerlink" title="AWS Event Bridge and AWS Fargate: A match made in heaven"></a>AWS Event Bridge and AWS Fargate: A match made in heaven</h2><p>Running a command in container on demand is a powerful feature of AWS Fargate. This opens a whole world of possibilities when combined with aws event bridge. Using an <code>EventRule</code> you can match existing aws events or custom events you intend to send to event bridge and set an AWS Fargate task as a target.</p>
@@ -96,9 +79,101 @@
         <category>DevOps</category>
       </categories>
       <tags>
-        <tag>linux</tag>
         <tag>docker</tag>
         <tag>docker-plugin</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Large S3 file handling for lambdas. No one rule to fit them all</title>
+    <url>/blog/2024/09/08/Large-S3-file-handling-for-lambdas-no-one-size-to-rule-them-all/</url>
+    <content><![CDATA[<p>Recently I was working on a project that was supposed to preload a large file on a lambda that was wired to  api gateway. I came up with the following problem worth researching. What is the best approach to make cold lambdas launch at a viable time while loading the file in memory?  </p>
+<h2 id="Is-compression-worth-it"><a href="#Is-compression-worth-it" class="headerlink" title="Is compression worth it?"></a>Is compression worth it?</h2><p>In my case I had a 165MB ml model pickle file that should be loaded on start-up. First attempt was without any compression which resulted in ~4 seconds cold start of which ~3 seconds where actually network time.<br>The breakdown was as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line">        1    0.000    0.000    4.207    4.207 /var/task/lambdas/pred.py:16(calculate_pred_score_lambda)</span><br><span class="line">        2    0.000    0.000    4.067    2.033 /var/task/libs/base/util.py:66(read_pickle)</span><br><span class="line">        2    0.001    0.001    3.941    1.971 /var/lang/lib/python3.11/site-packages/dill/_dill.py:266(load)</span><br><span class="line">        2    0.000    0.000    3.940    1.970 /var/lang/lib/python3.11/site-packages/dill/_dill.py:418(load)</span><br><span class="line">        2    0.839    0.419    3.940    1.970 &#123;function Unpickler.load at 0x7f06a961be20&#125;</span><br><span class="line">     1930    0.006    0.000    3.071    0.002 /var/runtime/botocore/response.py:93(read)</span><br><span class="line">    27111    0.045    0.000    3.066    0.000 /var/lang/lib/python3.11/socket.py:692(readinto)</span><br><span class="line">     1930    0.018    0.000    3.065    0.002 /var/runtime/urllib3/response.py:535(read)</span><br><span class="line">1999/1965    0.040    0.000    3.011    0.002 &#123;method &#x27;read&#x27; of &#x27;_io.BufferedReader&#x27; objects&#125;</span><br><span class="line">     1930    0.003    0.000    3.010    0.002 /var/runtime/urllib3/response.py:487(_fp_read)</span><br><span class="line">     1930    0.007    0.000    3.007    0.002 /var/lang/lib/python3.11/http/client.py:450(read)</span><br><span class="line">    27111    0.046    0.000    2.985    0.000 /var/lang/lib/python3.11/ssl.py:1267(recv_into)</span><br><span class="line">    27111    0.030    0.000    2.929    0.000 /var/lang/lib/python3.11/ssl.py:1125(read)</span><br><span class="line">    27111    2.896    0.000    2.896    0.000 &#123;method &#x27;read&#x27; of &#x27;_ssl._SSLSocket&#x27; objects&#125;</span><br></pre></td></tr></table></figure>
+
+<p> The first attempt was to compress the file with <a href="https://docs.python.org/3/library/bz2.html">bz2</a> without loading any extra dependencies to my project. The result proved that compression at (least with bz2) was not worth it. Network time dropped from ~3 seconds to ~300ms which is a ~10x improvement but the time taken to decompress the file was 14 seconds, resulting in a ~10 seconds slower start.<br> You can see full break down below:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line">     1    0.000    0.000   15.447   15.447 /var/task/lambdas/pred.py:16(calculate_pred_score_lambda)</span><br><span class="line">     2    0.000    0.000   15.278    7.639 /var/task/libs/base/util.py:66(read_pickle)</span><br><span class="line">     2    0.009    0.005   15.073    7.537 /var/lang/lib/python3.11/site-packages/dill/_dill.py:266(load)</span><br><span class="line">     2    0.000    0.000   15.064    7.532 /var/lang/lib/python3.11/site-packages/dill/_dill.py:418(load)</span><br><span class="line">     2    0.203    0.102   15.064    7.532 &#123;function Unpickler.load at 0x7f13acc8bec0&#125;</span><br><span class="line">   960    0.368    0.000   14.814    0.015 /var/lang/lib/python3.11/_compression.py:66(readinto)</span><br><span class="line">   320    0.001    0.000   14.680    0.046 /var/lang/lib/python3.11/bz2.py:178(readinto)</span><br><span class="line">   320    0.004    0.000   14.679    0.046 &#123;method &#x27;readinto&#x27; of &#x27;_io.BufferedReader&#x27; objects&#125;</span><br><span class="line">   960    0.023    0.000   14.444    0.015 /var/lang/lib/python3.11/_compression.py:72(read)</span><br><span class="line">  8106   14.004    0.002   14.004    0.002 &#123;method &#x27;decompress&#x27; of &#x27;_bz2.BZ2Decompressor&#x27; objects&#125;</span><br><span class="line">  7470    0.011    0.000    0.415    0.000 /var/runtime/botocore/response.py:93(read)</span><br><span class="line">  7470    0.048    0.000    0.403    0.000 /var/runtime/urllib3/response.py:535(read)</span><br><span class="line"> 13620    0.020    0.000    0.395    0.000 /var/lang/lib/python3.11/socket.py:692(readinto)</span><br><span class="line"> 13620    0.021    0.000    0.358    0.000 /var/lang/lib/python3.11/ssl.py:1267(recv_into)</span><br><span class="line"> 13620    0.013    0.000    0.333    0.000 /var/lang/lib/python3.11/ssl.py:1125(read)</span><br><span class="line"> 13620    0.318    0.000    0.318    0.000 &#123;method &#x27;read&#x27; of &#x27;_ssl._SSLSocket&#x27; objects&#125;</span><br></pre></td></tr></table></figure>
+<p>The verdict up-to this point is that s3 transfers to lambdas are fast enough to outbeat bz2 compression and given that transfer cost from s3 to aws lambda is zero skipping compression might be viable solution depending on your needs.</p>
+<h2 id="Using-a-better-compression-algorithm-LZ4-to-the-rescue"><a href="#Using-a-better-compression-algorithm-LZ4-to-the-rescue" class="headerlink" title="Using a better compression algorithm. LZ4 to the rescue"></a>Using a better compression algorithm. LZ4 to the rescue</h2><p>The next step was to find a better algorithm since the max acceptable cold start was 2 seconds in my case, hence leveraging the best of both worlds (ie. fast s3 transfers and compression) was a one way street. After looking into it I stumbled on <a href="https://github.com/python-lz4/python-lz4">LZ4</a>. LZ4 provides a good trade-off between speed and compression ratio. We got a not significantly bigger file while decompression speed is significantly faster. As a result we got ~30x faster decompression vs bz2 time and ~10x faster network time vs uncompressed. The total cold start response time was ~half of that of uncompressed file load and ~1/7th of that of bz2 compression.<br>Here is the breakdown: </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span><br><span class="line">        1    0.000    0.000    1.954    1.954 /var/task/lambdas/pred.py:16(calculate_pred_score_lambda)</span><br><span class="line">        2    0.000    0.000    1.896    0.948 /var/task/libs/base/util.py:66(read_pickle)</span><br><span class="line">        2    0.001    0.000    1.836    0.918 /var/lang/lib/python3.11/site-packages/dill/_dill.py:266(load)</span><br><span class="line">        2    0.000    0.000    1.836    0.918 /var/lang/lib/python3.11/site-packages/dill/_dill.py:418(load)</span><br><span class="line">        2    0.370    0.185    1.836    0.918 &#123;function Unpickler.load at 0x7ff1f810a3e0&#125;</span><br><span class="line">      655    0.001    0.000    1.444    0.002 /var/lang/lib/python3.11/site-packages/lz4/frame/__init__.py:650(read)</span><br><span class="line">17762/660    0.053    0.000    1.442    0.002 &#123;method &#x27;read&#x27; of &#x27;_io.BufferedReader&#x27; objects&#125;</span><br><span class="line">     6427    0.264    0.000    1.433    0.000 /var/lang/lib/python3.11/_compression.py:66(readinto)</span><br><span class="line">     6427    0.035    0.000    1.161    0.000 /var/lang/lib/python3.11/_compression.py:72(read)</span><br><span class="line">    17107    0.021    0.000    0.777    0.000 /var/runtime/botocore/response.py:93(read)</span><br><span class="line">    17107    0.094    0.000    0.754    0.000 /var/runtime/urllib3/response.py:535(read)</span><br><span class="line">    17107    0.020    0.000    0.484    0.000 /var/runtime/urllib3/response.py:487(_fp_read)</span><br><span class="line">    17107    0.032    0.000    0.464    0.000 /var/lang/lib/python3.11/http/client.py:450(read)</span><br><span class="line">    32928    0.046    0.000    0.422    0.000 /var/lang/lib/python3.11/socket.py:692(readinto)</span><br><span class="line">    17755    0.036    0.000    0.348    0.000 /var/lang/lib/python3.11/site-packages/lz4/frame/__init__.py:372(decompress)</span><br><span class="line">    32928    0.045    0.000    0.341    0.000 /var/lang/lib/python3.11/ssl.py:1267(recv_into)</span><br><span class="line">    17755    0.306    0.000    0.306    0.000 &#123;built-in method lz4.frame._frame.decompress_chunk&#125;</span><br><span class="line">    32928    0.031    0.000    0.286    0.000 /var/lang/lib/python3.11/ssl.py:1125(read)</span><br><span class="line">    32928    0.250    0.000    0.250    0.000 &#123;method &#x27;read&#x27; of &#x27;_ssl._SSLSocket&#x27; objects&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>To take advantage of compression the decompression cost must outbeat the already low data transfer cost from lambda to s3. Given that transfer speed might event increase in the future it’s a good approach to experiment before applying any compression. In our case LZ4 proved to bring the best out of both worlds. Other approaches to consider especially if the size if your ml models grow is using ready-made services that are built specifically to manage your ml workflow from training to deployment. Here are the <a href="https://sagemaker.readthedocs.io/en/stable/frameworks/tensorflow/deploying_tensorflow_serving.html#making-predictions-against-a-sagemaker-endpoint">docs</a> with examples of querying predictions from sagemaker instead of your own lambda ;) .  </p>
+]]></content>
+      <categories>
+        <category>DevOps</category>
+        <category>cloud</category>
+      </categories>
+      <tags>
+        <tag>aws</tag>
+        <tag>aws-lambda</tag>
+        <tag>s3</tag>
+        <tag>serverless</tag>
+        <tag>mlops</tag>
+        <tag>optimization</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Applying firmware upgrades on linux with fwupd</title>
+    <url>/blog/2022/07/22/Applying-firmware-upgrades-on-linux-with-fwupd/</url>
+    <content><![CDATA[<p>Sometimes you might need to perform a firmware upgrade of some hardware on your machine (Intel Management Engine, your finger print reader, your ssd disk etc).<br>This can be performed via <code>fwupdmgr</code> <code>fwupd</code> command:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fwupdmgr get-devices # Get all devices that support firmware updates</span><br><span class="line">fwupdmgr refresh # Refresh metadata from remote server use --force if you want to refresh again without 3 hours passing</span><br><span class="line">fwupdmgr get-updates # Gets the list of updates for connected hardware</span><br><span class="line">fwupdmgr update # Updates all specified devices to latest firmware version, or all devices if unspecified</span><br></pre></td></tr></table></figure>
+
+<p>Keeping the snippet here for future reference hope it helps somebody.</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>fwupd</tag>
+        <tag>firmware</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
+    <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
+    <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
+<h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#x27;processing &#123;val&#125;&#x27; )</span><br><span class="line">    return (val % 2) == 0</span><br><span class="line"></span><br><span class="line">huge_range = range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#x27;Some even found&#x27;)</span><br><span class="line">else:</span><br><span class="line">  print(&#x27;No even found&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>The above will have the following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
+<p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
+<h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
+<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) =&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number= 1) &#123;</span><br><span class="line">  let x = start - step;</span><br><span class="line">  while(x &lt; end - step) yield x += step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`)</span><br><span class="line">  return a%2 === 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange = range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#x27;Some even found&#x27;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#x27;No even found&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The above will have the following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
+<h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; range &#125; from &#x27;rxjs/observable/range&#x27;;</span><br><span class="line">import &#123; every, map &#125; from &#x27;rxjs/operators&#x27;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`);</span><br><span class="line">  return a % 2 === 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) =&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) =&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#x27;Some even found&#x27;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#x27;All Odd&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>The above will have the following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
+]]></content>
+      <categories>
+        <category>Software Engineering</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>javascript</tag>
+        <tag>typescript</tag>
+        <tag>iterable</tag>
+        <tag>generator</tag>
       </tags>
   </entry>
   <entry>
@@ -162,56 +237,9 @@ replace <code>&lt;DEVICE_ID&gt;</code> with the device id you have registered in
         <category>DevOps</category>
       </categories>
       <tags>
-        <tag>linux</tag>
         <tag>docker</tag>
+        <tag>linux</tag>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python map built-in function, why  it&#39;s superior to javascript array map method and how to implement it</title>
-    <url>/blog/2021/09/24/Python-map-built-in-function-why-it-s-superior-to-javascript-array-map-method-and-how-to-implement-it/</url>
-    <content><![CDATA[<p>According to python docs <a href="https://docs.python.org/3/library/functions.html#map">map</a> build in function applies a given function to every item of an iterable, <strong>yielding</strong> the results. <code>map</code> returns an object that is an iterable lazily executing the provided transformation function to each element of input iterable. From the above we understand that map works pretty much like an Generator.</p>
-<h2 id="Why-is-this-awesome"><a href="#Why-is-this-awesome" class="headerlink" title="Why is this awesome ?"></a>Why is this awesome ?</h2><p>Well If you were to perform an expensive transformation on a huge iterable just to utilize a sub-part of it, lazily transforming what’s needed is the optimal approach. Let’s have a look at the following example :</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def isEven(val):</span><br><span class="line">    print(F&#x27;processing &#123;val&#125;&#x27; )</span><br><span class="line">    return (val % 2) == 0</span><br><span class="line"></span><br><span class="line">huge_range = range(1,10**24+1)</span><br><span class="line"></span><br><span class="line">if any(map(isEven, huge_range)):</span><br><span class="line">  print(&#x27;Some even found&#x27;)</span><br><span class="line">else:</span><br><span class="line">  print(&#x27;No even found&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.mycompiler.io/view/3h1UhlQ">MyCompiler</a></p>
-<p>As we can see <code>any</code> build in function iterates a given iterable until any truthy value is found and returns <code>true</code>(otherwise it returns <code>false</code>). The only case that our iterable would have all its elements transformed is if no even value was included in it. In our case the second element was even, so we skipped <code>10^24-2</code> transformations.</p>
-<h2 id="How-about-Javascript"><a href="#How-about-Javascript" class="headerlink" title="How about Javascript?"></a>How about Javascript?</h2><p>In javascript the build in method for mapping is the one of <code>Array.prototype.map</code>. This method is on array prototype (applicable to just arrays) and returns a new array. Since an array is returned transformations get executed all at once. How about lodash helpers? Same goes with lodash supporting just arrays. As a result it’s obvious that if we want to get something similar to python we need to implement our own functions that can work lazily using generators.</p>
-<h2 id="The-map-function"><a href="#The-map-function" class="headerlink" title="The map function"></a>The map function</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* map&lt;a, b&gt;(a: Iterable&lt;a&gt;, f:(a:a) =&gt; b)&#123;</span><br><span class="line">  for (const value of a) &#123;</span><br><span class="line">    yield f(value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-some-function-similar-to-any-in-python"><a href="#The-some-function-similar-to-any-in-python" class="headerlink" title="The some function (similar to any in python)"></a>The <code>some</code> function (similar to <code>any</code> in python)</h2><p>As with map function we don’t have a build in or lodash function that accepts arbitrary iterables so we resort to the following:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function some&lt;a&gt;(iterable:Iterable&lt;a&gt;) &#123;</span><br><span class="line">  for (const el of iterable)&#123;</span><br><span class="line">    if (el)) &#123;</span><br><span class="line">      return true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-range"><a href="#The-range" class="headerlink" title="The range"></a>The <code>range</code></h2><p>Since 10^24 size array is huge and we <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length">won’t be able to actually have such an array</a> (it’s bigger than <code>2^32</code>), we ‘ll go ahead and make a generator just for demo purposes:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function* range(start:number, end:number,step: number= 1) &#123;</span><br><span class="line">  let x = start - step;</span><br><span class="line">  while(x &lt; end - step) yield x += step;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Putting-it-all-together"><a href="#Putting-it-all-together" class="headerlink" title="Putting it all together"></a>Putting it all together</h2><p>After putting the above together we achieve the same results as with python build in functions.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function isEven(a:number)&#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`)</span><br><span class="line">  return a%2 === 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const hugeRange = range(1, Math.pow(10,24)+1);</span><br><span class="line"></span><br><span class="line">if (some(map(hugeRange, isEven)))&#123;</span><br><span class="line">  console.log(&#x27;Some even found&#x27;)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  console.log(&#x27;No even found&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.typescriptlang.org/play#code/GYVwdgxgLglg9mAVAAgLYEMAOAedAaZAIwD4AKdALmQEkoBTAJ3UIBs7diDgLyL0BKZAF5iRfgG8AUMmTA4DZKQgIAzlGQA3dCxB1kcYMgHIpMmQE8YdFgBNZpLTrr9pyAL6SPoSLATIVcKjs6GQw9EysdBS0jMxsHIKmyGzqMGA2dAAewsgAtACMkq5yCkqq6tb6hmGxkRKuMmkZmQDULQDcDcgwhqTW-IldMgx0UCAMYMhQDLpdHjIeriNjE7LaKnSeRd7Q8EjITGAA5nSkaugMUBRgIKiEjAR06de39wx4anSYVDd3jELIfKDGQpZDZAHnS55fz0TCdGQAdwAFjA2KRsthkE87LkYV9BJZrHZsi0IbDOosdr5JjAVABRDRPXi-N71GTKMABNgAOhYcCOpAABpgGHAIHQVCo0kdkAAScToNyClzDUbjSboACkACZhEIAQAGLaSDlqZBIkAnABK6GOegBhxOpHyBAAsugoEjuZg4AjnQa8NqACz8FpAzqSHqKAJBUgYTCkC3W20nAi0hlPAZs5CmuA8vkCgDkAGVAno6IzJnJwDZCy43NYNklc-n+aRCwA5OBYyuyOA1uvGoA">Playground Link</a></p>
-<h1 id="How-about-existing-javascript-libraries"><a href="#How-about-existing-javascript-libraries" class="headerlink" title="How about existing javascript libraries?"></a>How about existing javascript libraries?</h1><p>The only javascript library that I know of, giving similar behavior is <code>rxjs</code> , through it’s <code>map</code> and <code>every</code> (similar to python’s <code>all</code>) operators. Here is an example:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; range &#125; from &#x27;rxjs/observable/range&#x27;;</span><br><span class="line">import &#123; every, map &#125; from &#x27;rxjs/operators&#x27;;</span><br><span class="line"></span><br><span class="line">function isOdd(a: number) &#123;</span><br><span class="line">  console.log(`processing $&#123;a&#125;`);</span><br><span class="line">  return a % 2 === 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">range(1, Math.pow(10, 24) + 1)</span><br><span class="line">  .pipe(</span><br><span class="line">    map(isOdd),</span><br><span class="line">    every((x) =&gt; x)</span><br><span class="line">  )</span><br><span class="line">  .subscribe((allOdd) =&gt; &#123;</span><br><span class="line">    if (!allOdd) &#123;</span><br><span class="line">      console.log(&#x27;Some even found&#x27;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#x27;All Odd&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>The above will have the following result:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">processing 1</span><br><span class="line">processing 2</span><br><span class="line">Some even found</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://stackblitz.com/edit/typescript-rx-playground-shdnx7">Stackblitz</a></p>
-]]></content>
-      <categories>
-        <category>Software Engineering</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>javascript</tag>
-        <tag>typescript</tag>
-        <tag>iterable</tag>
-        <tag>generator</tag>
       </tags>
   </entry>
 </search>
